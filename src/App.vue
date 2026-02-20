@@ -5,6 +5,7 @@
         <RouterLink class="font-semibold text-white" to="/">Time Tracking</RouterLink>
         <RouterLink class="text-slate-300 hover:text-white" to="/">Home</RouterLink>
         <RouterLink class="text-slate-300 hover:text-white" to="/login">Login</RouterLink>
+        <RouterLink class="text-slate-300 hover:text-white" to="/register">Register</RouterLink>
       </nav>
     </header>
     <main class="mx-auto max-w-5xl px-4 py-8">
