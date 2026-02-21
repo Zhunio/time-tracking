@@ -9,18 +9,25 @@ class AuthService {
     headers: { 'Content-Type': 'application/json' },
   });
 
+  private readonly authTokenKey = 'authToken';
+  private readonly authUserKey = 'authUser';
+
+  isAuthenticated(): boolean {
+    return Boolean(localStorage.getItem(this.authTokenKey));
+  }
+
   async login({ email, password }: LoginRequest): Promise<void> {
     const {
       data: { user, accessToken },
     } = await this.api.post<LoginResponse>('/auth/login', { email, password });
 
-    localStorage.setItem('authToken', accessToken);
-    localStorage.setItem('authUser', JSON.stringify(user));
+    localStorage.setItem(this.authTokenKey, accessToken);
+    localStorage.setItem(this.authUserKey, JSON.stringify(user));
   }
 
   logout(): void {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('authUser');
+    localStorage.removeItem(this.authTokenKey);
+    localStorage.removeItem(this.authUserKey);
   }
 }
 
