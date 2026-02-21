@@ -2,9 +2,9 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import HomePage from '../pages/HomePage.vue';
 import LoginPage from '../pages/LoginPage.vue';
 import RegisterPage from '../pages/RegisterPage.vue';
-import AdminUsersPage from '../pages/AdminUsersPage.vue';
-import AdminCreateUserPage from '../pages/AdminCreateUserPage.vue';
-import AdminEditUserPage from '../pages/AdminEditUserPage.vue';
+import UserListPage from '../pages/admin/UserListPage.vue';
+import UserCreatePage from '../pages/admin/UserCreatePage.vue';
+import UserEditPage from '../pages/admin/UserEditPage.vue';
 import apiService from '../services/ApiService';
 
 const routes: RouteRecordRaw[] = [
@@ -29,19 +29,19 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/admin/users',
     name: 'admin-users',
-    component: AdminUsersPage,
+    component: UserListPage,
     meta: { requiresAuth: true, requiresAdmin: true },
   },
   {
     path: '/admin/users/create',
     name: 'admin-users-create',
-    component: AdminCreateUserPage,
+    component: UserCreatePage,
     meta: { requiresAuth: true, requiresAdmin: true },
   },
   {
     path: '/admin/users/:id/edit',
     name: 'admin-users-edit',
-    component: AdminEditUserPage,
+    component: UserEditPage,
     meta: { requiresAuth: true, requiresAdmin: true },
   },
 ];

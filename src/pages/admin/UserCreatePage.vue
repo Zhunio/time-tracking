@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import apiService from '../services/ApiService';
-import type { CreateUserRequest } from '../types/user';
+import apiService from '../../services/ApiService';
+import type { CreateUserRequest } from '../../types/user';
 
 const router = useRouter();
 const isCreating = ref(false);
