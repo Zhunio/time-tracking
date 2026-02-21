@@ -10,6 +10,7 @@ const errorMessage = ref('');
 const router = useRouter();
 
 const onLogin = async () => {
+  // Prevent duplicate submissions while the first login request is still in flight.
   if (isLoading.value) {
     return;
   }
