@@ -5,4 +5,4 @@ services:
       args:
         VITE_BASE_URL: ${VITE_BASE_URL}
     ports:
-      - "8080:80"
+      - '8080:80'
