@@ -11,15 +11,21 @@ const userId = computed(() => String(route.params.id ?? ''));
 const isLoading = ref(false);
 const isSaving = ref(false);
 const isDeleting = ref(false);
+const isResettingPassword = ref(false);
 const errorMessage = ref('');
+const resetPasswordError = ref('');
+const resetPasswordSuccess = ref('');
 
 const form = ref({
   email: '',
-  password: '',
   firstName: '',
   lastName: '',
   dateOfBirth: '',
   isAdmin: false,
+});
+const resetPasswordForm = ref({
+  password: '',
+  confirmPassword: '',
 });
 
 const toIsoDate = (dateValue: string): string => {
@@ -58,7 +64,6 @@ const loadUser = async () => {
 
     form.value = {
       email: user.email,
-      password: '',
       firstName: user.firstName,
       lastName: user.lastName,
       dateOfBirth: toDateInput(user.dateOfBirth),
@@ -123,6 +128,40 @@ const onDeleteUser = async () => {
   }
 };
 
+const onResetPassword = async () => {
+  if (isResettingPassword.value || !userId.value) {
+    return;
+  }
+
+  resetPasswordError.value = '';
+  resetPasswordSuccess.value = '';
+
+  if (!resetPasswordForm.value.password || !resetPasswordForm.value.confirmPassword) {
+    resetPasswordError.value = 'Password and confirm password are required.';
+    return;
+  }
+
+  if (resetPasswordForm.value.password !== resetPasswordForm.value.confirmPassword) {
+    resetPasswordError.value = 'Passwords do not match.';
+    return;
+  }
+
+  isResettingPassword.value = true;
+
+  try {
+    await apiService.updateUser(userId.value, { password: resetPasswordForm.value.password });
+    resetPasswordForm.value = {
+      password: '',
+      confirmPassword: '',
+    };
+    resetPasswordSuccess.value = 'Password reset successfully.';
+  } catch (error) {
+    resetPasswordError.value = 'Failed to reset password.';
+  } finally {
+    isResettingPassword.value = false;
+  }
+};
+
 onMounted(loadUser);
 </script>
 
@@ -136,60 +175,87 @@ onMounted(loadUser);
     <p v-if="errorMessage" class="admin-edit-user-error">{{ errorMessage }}</p>
     <p v-if="isLoading" class="admin-edit-user-muted">Loading user...</p>
 
-    <form v-else class="admin-edit-user-form" @submit.prevent="onSaveUser">
-      <div class="admin-edit-user-grid">
-        <label class="admin-edit-user-field">
-          <span>First Name</span>
-          <input v-model="form.firstName" type="text" required class="admin-edit-user-input" />
-        </label>
+    <div v-else class="admin-edit-user-sections">
+      <form class="admin-edit-user-form" @submit.prevent="onSaveUser">
+        <div class="admin-edit-user-grid">
+          <label class="admin-edit-user-field">
+            <span>First Name</span>
+            <input v-model="form.firstName" type="text" required class="admin-edit-user-input" />
+          </label>
 
-        <label class="admin-edit-user-field">
-          <span>Last Name</span>
-          <input v-model="form.lastName" type="text" required class="admin-edit-user-input" />
-        </label>
+          <label class="admin-edit-user-field">
+            <span>Last Name</span>
+            <input v-model="form.lastName" type="text" required class="admin-edit-user-input" />
+          </label>
 
-        <label class="admin-edit-user-field">
-          <span>Email</span>
-          <input v-model="form.email" type="email" required class="admin-edit-user-input" />
-        </label>
+          <label class="admin-edit-user-field">
+            <span>Email</span>
+            <input v-model="form.email" type="email" required class="admin-edit-user-input" />
+          </label>
 
-        <label class="admin-edit-user-field">
-          <span>Date of Birth</span>
-          <input v-model="form.dateOfBirth" type="date" required class="admin-edit-user-input" />
-        </label>
+          <label class="admin-edit-user-field">
+            <span>Date of Birth</span>
+            <input v-model="form.dateOfBirth" type="date" required class="admin-edit-user-input" />
+          </label>
 
-        <!--
-        <label class="admin-edit-user-field admin-edit-user-field-password">
-          <span>Password</span>
-          <input v-model="form.password" type="password" class="admin-edit-user-input" />
-        </label>
-        -->
+          <label class="admin-edit-user-checkbox">
+            <input v-model="form.isAdmin" type="checkbox" class="admin-edit-user-checkbox-input" />
+            <span>Admin user</span>
+          </label>
+        </div>
 
-        <label class="admin-edit-user-checkbox">
-          <input v-model="form.isAdmin" type="checkbox" class="admin-edit-user-checkbox-input" />
-          <span>Admin user</span>
-        </label>
-      </div>
-
-      <div class="admin-edit-user-actions">
-        <div class="admin-edit-user-actions-main">
-          <button type="submit" :disabled="isSaving || isDeleting" class="admin-edit-user-button">
-            {{ isSaving ? 'Saving...' : 'Save' }}
-          </button>
+        <div class="admin-edit-user-actions">
+          <div class="admin-edit-user-actions-main">
+            <button type="submit" :disabled="isSaving || isDeleting || isResettingPassword" class="admin-edit-user-button">
+              {{ isSaving ? 'Saving...' : 'Save' }}
+            </button>
+            <button
+              type="button"
+              class="admin-edit-user-button-secondary"
+              :disabled="isSaving || isDeleting || isResettingPassword"
+              @click="onCancel"
+            >
+              Cancel
+            </button>
+          </div>
           <button
             type="button"
-            class="admin-edit-user-button-secondary"
-            :disabled="isSaving || isDeleting"
-            @click="onCancel"
+            class="admin-edit-user-button-danger"
+            :disabled="isSaving || isDeleting || isResettingPassword"
+            @click="onDeleteUser"
           >
-            Cancel
+            {{ isDeleting ? 'Deleting...' : 'Delete' }}
           </button>
         </div>
-        <button type="button" class="admin-edit-user-button-danger" :disabled="isSaving || isDeleting" @click="onDeleteUser">
-          {{ isDeleting ? 'Deleting...' : 'Delete' }}
-        </button>
-      </div>
-    </form>
+      </form>
+
+      <section class="admin-reset-password">
+        <h2 class="admin-reset-password-title">Reset Password</h2>
+        <p class="admin-edit-user-muted">Set a new password for this user.</p>
+
+        <p v-if="resetPasswordError" class="admin-edit-user-error">{{ resetPasswordError }}</p>
+        <p v-if="resetPasswordSuccess" class="admin-reset-password-success">{{ resetPasswordSuccess }}</p>
+
+        <form class="admin-reset-password-form" @submit.prevent="onResetPassword">
+          <div class="admin-edit-user-grid">
+            <label class="admin-edit-user-field">
+              <span>New Password</span>
+              <input v-model="resetPasswordForm.password" type="password" required class="admin-edit-user-input" />
+            </label>
+            <label class="admin-edit-user-field">
+              <span>Confirm Password</span>
+              <input v-model="resetPasswordForm.confirmPassword" type="password" required class="admin-edit-user-input" />
+            </label>
+          </div>
+
+          <div class="admin-reset-password-actions">
+            <button type="submit" :disabled="isResettingPassword || isSaving || isDeleting" class="admin-edit-user-button">
+              {{ isResettingPassword ? 'Resetting...' : 'Reset Password' }}
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
   </section>
 </template>
 
@@ -220,6 +286,10 @@ onMounted(loadUser);
   @apply p-0;
 }
 
+.admin-edit-user-sections {
+  @apply space-y-8;
+}
+
 .admin-edit-user-grid {
   @apply grid gap-3 md:grid-cols-2;
 }
@@ -244,10 +314,6 @@ onMounted(loadUser);
   @apply accent-emerald-300;
 }
 
-.admin-edit-user-field-password {
-  @apply md:col-span-2;
-}
-
 .admin-edit-user-actions {
   @apply mt-4 flex flex-wrap items-center justify-between gap-3;
 }
@@ -266,5 +332,21 @@ onMounted(loadUser);
 
 .admin-edit-user-button-danger {
   @apply cursor-pointer rounded-md bg-red-700 px-3 py-1.5 text-sm font-medium text-white transition duration-150 hover:bg-red-600 hover:shadow-sm disabled:cursor-not-allowed disabled:opacity-60;
+}
+
+.admin-reset-password {
+  @apply space-y-3 border-t border-slate-800 pt-6;
+}
+
+.admin-reset-password-title {
+  @apply text-lg font-semibold text-white;
+}
+
+.admin-reset-password-success {
+  @apply rounded-md border border-emerald-900/70 bg-emerald-950/50 p-3 text-sm text-emerald-300;
+}
+
+.admin-reset-password-actions {
+  @apply mt-4;
 }
 </style>
