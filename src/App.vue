@@ -42,7 +42,7 @@ const onLogout = async () => {
 @reference 'tailwindcss';
 
 .app-shell {
-  @apply min-h-screen bg-black text-white;
+  @apply min-h-screen bg-slate-950 text-white;
 }
 
 .app-header {

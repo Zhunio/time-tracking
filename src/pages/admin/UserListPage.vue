@@ -50,8 +50,6 @@ onMounted(loadUsers);
     <p v-if="errorMessage" class="admin-users-error">{{ errorMessage }}</p>
 
     <section class="admin-users-list">
-      <h2 class="admin-users-form-title">Users</h2>
-
       <p v-if="isLoadingUsers" class="admin-users-muted">Loading users...</p>
       <p v-else-if="users.length === 0" class="admin-users-muted">No users found.</p>
 
@@ -87,7 +85,7 @@ onMounted(loadUsers);
 @reference 'tailwindcss';
 
 .admin-users {
-  @apply space-y-6 rounded-xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm;
+  @apply space-y-6 bg-transparent p-0 text-slate-100;
 }
 
 .admin-users-header {
@@ -95,23 +93,19 @@ onMounted(loadUsers);
 }
 
 .admin-users-title {
-  @apply text-2xl font-bold tracking-tight;
+  @apply text-2xl font-bold tracking-tight text-white;
 }
 
 .admin-users-subtitle {
-  @apply mt-2 text-sm text-slate-600;
+  @apply mt-2 text-sm text-slate-400;
 }
 
 .admin-users-error {
-  @apply rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700;
-}
-
-.admin-users-form-title {
-  @apply mb-4 text-lg font-semibold;
+  @apply rounded-md border border-red-900/70 bg-red-950/60 p-3 text-sm text-red-300;
 }
 
 .admin-users-list {
-  @apply rounded-lg border border-slate-200 p-4;
+  @apply p-0;
 }
 
 .admin-users-table-wrap {
@@ -119,23 +113,23 @@ onMounted(loadUsers);
 }
 
 .admin-users-table {
-  @apply min-w-full border-collapse border border-slate-300 text-sm;
+  @apply min-w-full border-collapse border border-slate-700 text-sm;
 }
 
 .admin-users-table th {
-  @apply border border-slate-300 bg-slate-50 px-3 py-2 text-left font-semibold text-slate-700;
+  @apply border border-slate-700 bg-slate-900 px-3 py-2 text-left font-semibold text-slate-200;
 }
 
 .admin-users-table td {
-  @apply border border-slate-300 px-3 py-2 align-top text-slate-800;
+  @apply border border-slate-700 px-3 py-2 align-top text-slate-200;
 }
 
 .admin-users-table tbody tr {
-  @apply transition-colors odd:bg-white even:bg-slate-50 hover:bg-slate-100;
+  @apply transition-colors odd:bg-slate-950/30 even:bg-slate-900/50 hover:bg-slate-800/70;
 }
 
 .admin-users-name-link {
-  @apply cursor-pointer font-medium text-blue-700 underline-offset-2 transition hover:underline;
+  @apply cursor-pointer font-medium text-sky-300 underline-offset-2 transition hover:text-sky-200 hover:underline;
 }
 
 .admin-users-cell-center {
@@ -143,10 +137,10 @@ onMounted(loadUsers);
 }
 
 .admin-users-muted {
-  @apply text-sm text-slate-600;
+  @apply text-sm text-slate-400;
 }
 
 .admin-users-button {
-  @apply rounded-md bg-slate-900 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-slate-700;
+  @apply cursor-pointer rounded-md bg-emerald-300 px-3 py-1.5 text-sm font-medium text-emerald-950 transition duration-150 hover:bg-emerald-200 hover:shadow-sm;
 }
 </style>

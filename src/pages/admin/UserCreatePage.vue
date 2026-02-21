@@ -69,28 +69,28 @@ const onCancel = async () => {
     <form class="admin-create-user-form" @submit.prevent="onCreateUser">
       <div class="admin-create-user-grid">
         <label class="admin-create-user-field">
+          <span>First Name</span>
+          <input v-model="form.firstName" type="text" required class="admin-create-user-input" />
+        </label>
+
+        <label class="admin-create-user-field">
+          <span>Last Name</span>
+          <input v-model="form.lastName" type="text" required class="admin-create-user-input" />
+        </label>
+
+        <label class="admin-create-user-field">
           <span>Email</span>
           <input v-model="form.email" type="email" required class="admin-create-user-input" />
         </label>
 
         <label class="admin-create-user-field">
+          <span>Date of Birth</span>
+          <input v-model="form.dateOfBirth" type="date" required class="admin-create-user-input" />
+        </label>
+
+        <label class="admin-create-user-field admin-create-user-field-password">
           <span>Password</span>
           <input v-model="form.password" type="password" required class="admin-create-user-input" />
-        </label>
-
-        <label class="admin-create-user-field">
-          <span>First name</span>
-          <input v-model="form.firstName" type="text" required class="admin-create-user-input" />
-        </label>
-
-        <label class="admin-create-user-field">
-          <span>Last name</span>
-          <input v-model="form.lastName" type="text" required class="admin-create-user-input" />
-        </label>
-
-        <label class="admin-create-user-field">
-          <span>Date of birth</span>
-          <input v-model="form.dateOfBirth" type="date" required class="admin-create-user-input" />
         </label>
 
         <label class="admin-create-user-checkbox">
@@ -100,12 +100,14 @@ const onCancel = async () => {
       </div>
 
       <div class="admin-create-user-actions">
-        <button type="submit" :disabled="isCreating" class="admin-create-user-button">
-          {{ isCreating ? 'Creating...' : 'Create user' }}
-        </button>
-        <button type="button" class="admin-create-user-button-secondary" :disabled="isCreating" @click="onCancel">
-          Cancel
-        </button>
+        <div class="admin-create-user-actions-main">
+          <button type="submit" :disabled="isCreating" class="admin-create-user-button">
+            {{ isCreating ? 'Creating...' : 'Create' }}
+          </button>
+          <button type="button" class="admin-create-user-button-secondary" :disabled="isCreating" @click="onCancel">
+            Cancel
+          </button>
+        </div>
       </div>
     </form>
   </section>
@@ -115,23 +117,23 @@ const onCancel = async () => {
 @reference 'tailwindcss';
 
 .admin-create-user {
-  @apply space-y-6 rounded-xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm;
+  @apply space-y-6 text-slate-100;
 }
 
 .admin-create-user-title {
-  @apply text-2xl font-bold tracking-tight;
+  @apply text-2xl font-bold tracking-tight text-white;
 }
 
 .admin-create-user-subtitle {
-  @apply mt-2 text-sm text-slate-600;
+  @apply mt-2 text-sm text-slate-400;
 }
 
 .admin-create-user-error {
-  @apply rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700;
+  @apply rounded-md border border-red-900/70 bg-red-950/60 p-3 text-sm text-red-300;
 }
 
 .admin-create-user-form {
-  @apply rounded-lg border border-slate-200 p-4;
+  @apply p-0;
 }
 
 .admin-create-user-grid {
@@ -143,26 +145,34 @@ const onCancel = async () => {
 }
 
 .admin-create-user-field span {
-  @apply mb-1 block text-sm font-medium text-slate-700;
+  @apply mb-1 block text-sm font-medium text-slate-300;
 }
 
 .admin-create-user-input {
-  @apply w-full rounded-md border border-slate-300 px-3 py-2 outline-none ring-0 transition focus:border-slate-500;
+  @apply w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-slate-100 outline-none ring-0 transition placeholder:text-slate-500 focus:border-slate-500;
 }
 
 .admin-create-user-checkbox {
-  @apply flex items-center gap-2 pt-6;
+  @apply flex items-center gap-2 pt-2 md:col-span-2;
+}
+
+.admin-create-user-field-password {
+  @apply md:col-span-2;
 }
 
 .admin-create-user-actions {
-  @apply mt-4 flex gap-2;
+  @apply mt-4 flex flex-wrap items-center justify-between gap-3;
+}
+
+.admin-create-user-actions-main {
+  @apply flex gap-2;
 }
 
 .admin-create-user-button {
-  @apply rounded-md bg-slate-900 px-3 py-2 font-medium text-white transition hover:bg-slate-700;
+  @apply cursor-pointer rounded-md bg-emerald-300 px-3 py-1.5 text-sm font-medium text-emerald-950 transition duration-150 hover:bg-emerald-200 hover:shadow-sm disabled:cursor-not-allowed disabled:opacity-60;
 }
 
 .admin-create-user-button-secondary {
-  @apply rounded-md border border-slate-300 px-3 py-2 font-medium text-slate-700 transition hover:bg-slate-100;
+  @apply cursor-pointer rounded-md border border-slate-700 px-3 py-1.5 text-sm font-medium text-slate-200 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60;
 }
 </style>

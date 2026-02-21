@@ -15,6 +15,7 @@ const errorMessage = ref('');
 
 const form = ref({
   email: '',
+  password: '',
   firstName: '',
   lastName: '',
   dateOfBirth: '',
@@ -57,6 +58,7 @@ const loadUser = async () => {
 
     form.value = {
       email: user.email,
+      password: '',
       firstName: user.firstName,
       lastName: user.lastName,
       dateOfBirth: toDateInput(user.dateOfBirth),
@@ -156,8 +158,15 @@ onMounted(loadUser);
           <input v-model="form.dateOfBirth" type="date" required class="admin-edit-user-input" />
         </label>
 
+        <!--
+        <label class="admin-edit-user-field admin-edit-user-field-password">
+          <span>Password</span>
+          <input v-model="form.password" type="password" class="admin-edit-user-input" />
+        </label>
+        -->
+
         <label class="admin-edit-user-checkbox">
-          <input v-model="form.isAdmin" type="checkbox" />
+          <input v-model="form.isAdmin" type="checkbox" class="admin-edit-user-checkbox-input" />
           <span>Admin user</span>
         </label>
       </div>
@@ -188,27 +197,27 @@ onMounted(loadUser);
 @reference 'tailwindcss';
 
 .admin-edit-user {
-  @apply space-y-6 rounded-xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm;
+  @apply space-y-6 bg-transparent p-0 text-slate-100;
 }
 
 .admin-edit-user-title {
-  @apply text-2xl font-bold tracking-tight;
+  @apply text-2xl font-bold tracking-tight text-white;
 }
 
 .admin-edit-user-subtitle {
-  @apply mt-2 text-sm text-slate-600;
+  @apply mt-2 text-sm text-slate-400;
 }
 
 .admin-edit-user-error {
-  @apply rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700;
+  @apply rounded-md border border-red-900/70 bg-red-950/60 p-3 text-sm text-red-300;
 }
 
 .admin-edit-user-muted {
-  @apply text-sm text-slate-600;
+  @apply text-sm text-slate-400;
 }
 
 .admin-edit-user-form {
-  @apply rounded-lg border border-slate-200 p-4;
+  @apply p-0;
 }
 
 .admin-edit-user-grid {
@@ -220,15 +229,23 @@ onMounted(loadUser);
 }
 
 .admin-edit-user-field span {
-  @apply mb-1 block text-sm font-medium text-slate-700;
+  @apply mb-1 block text-sm font-medium text-slate-300;
 }
 
 .admin-edit-user-input {
-  @apply w-full rounded-md border border-slate-300 px-3 py-2 outline-none ring-0 transition focus:border-slate-500;
+  @apply w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-slate-100 outline-none ring-0 transition placeholder:text-slate-500 focus:border-slate-500;
 }
 
 .admin-edit-user-checkbox {
   @apply flex items-center gap-2 pt-2 md:col-span-2;
+}
+
+.admin-edit-user-checkbox-input {
+  @apply accent-emerald-300;
+}
+
+.admin-edit-user-field-password {
+  @apply md:col-span-2;
 }
 
 .admin-edit-user-actions {
@@ -240,14 +257,14 @@ onMounted(loadUser);
 }
 
 .admin-edit-user-button {
-  @apply rounded-md bg-slate-900 px-3 py-2 font-medium text-white transition hover:bg-slate-700;
+  @apply cursor-pointer rounded-md bg-emerald-300 px-3 py-1.5 text-sm font-medium text-emerald-950 transition duration-150 hover:bg-emerald-200 hover:shadow-sm disabled:cursor-not-allowed disabled:opacity-60;
 }
 
 .admin-edit-user-button-secondary {
-  @apply rounded-md border border-slate-300 px-3 py-2 font-medium text-slate-700 transition hover:bg-slate-100;
+  @apply cursor-pointer rounded-md border border-slate-700 px-3 py-1.5 text-sm font-medium text-slate-200 transition duration-150 hover:border-slate-500 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60;
 }
 
 .admin-edit-user-button-danger {
-  @apply rounded-md bg-red-700 px-3 py-2 font-medium text-white transition hover:bg-red-600;
+  @apply cursor-pointer rounded-md bg-red-700 px-3 py-1.5 text-sm font-medium text-white transition duration-150 hover:bg-red-600 hover:shadow-sm disabled:cursor-not-allowed disabled:opacity-60;
 }
 </style>
