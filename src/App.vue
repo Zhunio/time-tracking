@@ -27,7 +27,7 @@ const onLogout = async () => {
         <RouterLink class="app-brand" to="/">Time Tracking</RouterLink>
         <template v-if="isAuthenticated">
           <RouterLink class="app-nav-link" to="/">Home</RouterLink>
-          <RouterLink v-if="isAdmin" class="app-nav-link" to="/admin/users">Users</RouterLink>
+          <RouterLink v-if="isAdmin" class="app-nav-link" to="/admin/users">User Management</RouterLink>
           <button type="button" class="app-logout-button" @click="onLogout">Logout</button>
         </template>
       </nav>
