@@ -206,7 +206,11 @@ onMounted(loadUser);
 
         <div class="admin-edit-user-actions">
           <div class="admin-edit-user-actions-main">
-            <button type="submit" :disabled="isSaving || isDeleting || isResettingPassword" class="admin-edit-user-button">
+            <button
+              type="submit"
+              :disabled="isSaving || isDeleting || isResettingPassword"
+              class="admin-edit-user-button"
+            >
               {{ isSaving ? 'Saving...' : 'Save' }}
             </button>
             <button
@@ -244,12 +248,21 @@ onMounted(loadUser);
             </label>
             <label class="admin-edit-user-field">
               <span>Confirm Password</span>
-              <input v-model="resetPasswordForm.confirmPassword" type="password" required class="admin-edit-user-input" />
+              <input
+                v-model="resetPasswordForm.confirmPassword"
+                type="password"
+                required
+                class="admin-edit-user-input"
+              />
             </label>
           </div>
 
           <div class="admin-reset-password-actions">
-            <button type="submit" :disabled="isResettingPassword || isSaving || isDeleting" class="admin-edit-user-button">
+            <button
+              type="submit"
+              :disabled="isResettingPassword || isSaving || isDeleting"
+              class="admin-edit-user-button"
+            >
               {{ isResettingPassword ? 'Resetting...' : 'Reset Password' }}
             </button>
           </div>
