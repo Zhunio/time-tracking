@@ -1,18 +1,11 @@
+import type { User } from './user';
+
 export type LoginRequest = {
   email: string;
   password: string;
 };
 
-export type AuthUser = {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
-  isAdmin: boolean;
-  createdAt: string;
-  updatedAt: string;
-};
+export type AuthUser = User;
 
 export type LoginResponse = {
   accessToken: string;

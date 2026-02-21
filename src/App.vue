@@ -9,6 +9,10 @@ const isAuthenticated = computed(() => {
   route.fullPath;
   return apiService.isAuthenticated();
 });
+const isAdmin = computed(() => {
+  route.fullPath;
+  return apiService.isAdmin();
+});
 
 const onLogout = async () => {
   apiService.logout();
@@ -23,6 +27,7 @@ const onLogout = async () => {
         <RouterLink class="app-brand" to="/">Time Tracking</RouterLink>
         <template v-if="isAuthenticated">
           <RouterLink class="app-nav-link" to="/">Home</RouterLink>
+          <RouterLink v-if="isAdmin" class="app-nav-link" to="/admin/users">User Management</RouterLink>
           <button type="button" class="app-logout-button" @click="onLogout">Logout</button>
         </template>
       </nav>
@@ -37,7 +42,7 @@ const onLogout = async () => {
 @reference 'tailwindcss';
 
 .app-shell {
-  @apply min-h-screen bg-black text-white;
+  @apply min-h-screen bg-slate-950 text-white;
 }
 
 .app-header {
