@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import authService from './services/AuthService';
+import apiService from './services/ApiService';
 
 const router = useRouter();
 const route = useRoute();
 const isAuthenticated = computed(() => {
   route.fullPath;
-  return authService.isAuthenticated();
+  return apiService.isAuthenticated();
 });
 
 const onLogout = async () => {
-  authService.logout();
+  apiService.logout();
   await router.push('/login');
 };
 </script>

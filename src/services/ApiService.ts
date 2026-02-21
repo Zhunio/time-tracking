@@ -1,11 +1,10 @@
 import axios from 'axios';
+import { env } from '../config/env';
 import type { LoginRequest, LoginResponse } from '../types/auth';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-
-class AuthService {
+class ApiService {
   private readonly api = axios.create({
-    baseURL: BASE_URL,
+    baseURL: env.baseUrl,
     headers: { 'Content-Type': 'application/json' },
   });
 
@@ -31,6 +30,6 @@ class AuthService {
   }
 }
 
-const authService = new AuthService();
+const apiService = new ApiService();
 
-export default authService;
+export default apiService;

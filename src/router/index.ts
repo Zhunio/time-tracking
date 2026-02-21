@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import HomePage from '../pages/HomePage.vue';
 import LoginPage from '../pages/LoginPage.vue';
 import RegisterPage from '../pages/RegisterPage.vue';
-import authService from '../services/AuthService';
+import apiService from '../services/ApiService';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -31,7 +31,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to) => {
-  const isAuthenticated = authService.isAuthenticated();
+  const isAuthenticated = apiService.isAuthenticated();
 
   if (to.meta.requiresAuth && !isAuthenticated) {
     return { name: 'login' };
