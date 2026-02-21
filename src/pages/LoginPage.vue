@@ -1,12 +1,12 @@
-<script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { login } from "../services/AuthService";
+<script setup lang="ts">
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { login } from '../services/AuthService';
 
-const email = ref("");
-const password = ref("");
+const email = ref('');
+const password = ref('');
 const isLoading = ref(false);
-const errorMessage = ref("");
+const errorMessage = ref('');
 const router = useRouter();
 
 const onLogin = async () => {
@@ -15,7 +15,7 @@ const onLogin = async () => {
   }
 
   isLoading.value = true;
-  errorMessage.value = "";
+  errorMessage.value = '';
 
   try {
     await login({
@@ -23,9 +23,9 @@ const onLogin = async () => {
       password: password.value,
     });
 
-    await router.push("/");
+    await router.push('/');
   } catch (error) {
-    errorMessage.value = "Invalid email or password. Please try again";
+    errorMessage.value = 'Invalid email or password. Please try again';
   } finally {
     isLoading.value = false;
   }
@@ -33,13 +33,9 @@ const onLogin = async () => {
 </script>
 
 <template>
-  <section
-    class="mx-auto max-w-md rounded-xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm"
-  >
+  <section class="mx-auto max-w-md rounded-xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm">
     <h1 class="text-2xl font-bold tracking-tight text-slate-900">Login</h1>
-    <p class="mt-2 text-sm text-slate-600">
-      Sign in to access your time tracking dashboard.
-    </p>
+    <p class="mt-2 text-sm text-slate-600">Sign in to access your time tracking dashboard.</p>
 
     <form class="mt-6 space-y-4" @submit.prevent="onLogin">
       <label class="block">
@@ -54,9 +50,7 @@ const onLogin = async () => {
       </label>
 
       <label class="block">
-        <span class="mb-1 block text-sm font-medium text-slate-700"
-          >Password</span
-        >
+        <span class="mb-1 block text-sm font-medium text-slate-700">Password</span>
         <input
           v-model="password"
           type="password"
@@ -71,7 +65,7 @@ const onLogin = async () => {
         :disabled="isLoading"
         class="w-full rounded-md bg-slate-900 px-3 py-2 font-medium text-white transition hover:bg-slate-700"
       >
-        {{ isLoading ? "Signing In..." : "Sign In" }}
+        {{ isLoading ? 'Signing In...' : 'Sign In' }}
       </button>
 
       <p v-if="errorMessage" class="text-sm text-red-600">{{ errorMessage }}</p>

@@ -1,10 +1,10 @@
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
+import { ref } from 'vue';
 
-const name = ref('')
-const email = ref('')
-const password = ref('')
-const confirmPassword = ref('')
+const name = ref('');
+const email = ref('');
+const password = ref('');
+const confirmPassword = ref('');
 
 const onSubmit = () => {
   // Placeholder until auth backend is connected.
@@ -13,8 +13,8 @@ const onSubmit = () => {
     email: email.value,
     password: password.value,
     confirmPassword: confirmPassword.value,
-  })
-}
+  });
+};
 </script>
 
 <template>
