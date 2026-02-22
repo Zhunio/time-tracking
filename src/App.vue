@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import apiService from './services/ApiService';
 
 const router = useRouter();
 const route = useRoute();
+const userMenuRef = ref<HTMLElement | null>(null);
+const userMenuTriggerRef = ref<HTMLButtonElement | null>(null);
+const userMenuDropdownRef = ref<HTMLElement | null>(null);
+const isUserMenuOpen = ref(false);
 const isAuthenticated = computed(() => {
   route.fullPath;
   return apiService.isAuthenticated();
@@ -26,9 +30,105 @@ const currentUserLabel = computed(() => {
 });
 
 const onLogout = async () => {
+  isUserMenuOpen.value = false;
   apiService.logout();
   await router.push('/auth/login');
 };
+
+const openUserMenu = async () => {
+  if (isUserMenuOpen.value) {
+    return;
+  }
+
+  isUserMenuOpen.value = true;
+  await nextTick();
+  userMenuDropdownRef.value?.focus();
+};
+
+const toggleUserMenu = async () => {
+  if (!isUserMenuOpen.value) {
+    await openUserMenu();
+    return;
+  }
+
+  isUserMenuOpen.value = !isUserMenuOpen.value;
+};
+
+const closeUserMenu = (returnFocus = false) => {
+  isUserMenuOpen.value = false;
+  if (returnFocus) {
+    userMenuTriggerRef.value?.focus();
+  }
+};
+
+const onDocumentPointerDown = (event: PointerEvent) => {
+  if (!isUserMenuOpen.value) {
+    return;
+  }
+
+  const target = event.target as Node | null;
+  if (target && userMenuRef.value?.contains(target)) {
+    return;
+  }
+
+  closeUserMenu();
+};
+
+const onDocumentKeyDown = (event: KeyboardEvent) => {
+  if (!isUserMenuOpen.value) {
+    return;
+  }
+
+  if (event.key !== 'Escape') {
+    return;
+  }
+
+  event.preventDefault();
+  closeUserMenu(true);
+};
+
+const onDocumentFocusIn = (event: FocusEvent) => {
+  if (!isUserMenuOpen.value) {
+    return;
+  }
+
+  const target = event.target as Node | null;
+  if (target && userMenuRef.value?.contains(target)) {
+    return;
+  }
+
+  closeUserMenu();
+};
+
+const onUserMenuTriggerKeyDown = async (event: KeyboardEvent) => {
+  if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    await openUserMenu();
+  }
+};
+
+const onUserMenuItemNavigate = () => {
+  closeUserMenu();
+};
+
+watch(
+  () => route.fullPath,
+  () => {
+    closeUserMenu();
+  }
+);
+
+onMounted(() => {
+  document.addEventListener('pointerdown', onDocumentPointerDown);
+  document.addEventListener('keydown', onDocumentKeyDown);
+  document.addEventListener('focusin', onDocumentFocusIn);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener('pointerdown', onDocumentPointerDown);
+  document.removeEventListener('keydown', onDocumentKeyDown);
+  document.removeEventListener('focusin', onDocumentFocusIn);
+});
 </script>
 
 <template>
@@ -36,8 +136,17 @@ const onLogout = async () => {
     <header class="app-header">
       <nav class="app-nav">
         <RouterLink class="app-brand" to="/">Time Tracking</RouterLink>
-        <div v-if="isAuthenticated" class="app-user-menu">
-          <div class="app-user-trigger">
+        <div v-if="isAuthenticated" ref="userMenuRef" class="app-user-menu">
+          <button
+            ref="userMenuTriggerRef"
+            type="button"
+            class="app-user-trigger"
+            :aria-expanded="isUserMenuOpen"
+            aria-controls="user-menu-dropdown"
+            aria-haspopup="menu"
+            @click="toggleUserMenu"
+            @keydown="onUserMenuTriggerKeyDown"
+          >
             <span class="app-user-trigger-user-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                 <path d="M20 21a8 8 0 0 0-16 0" />
@@ -50,9 +159,22 @@ const onLogout = async () => {
                 <path d="m6 9 6 6 6-6" />
               </svg>
             </span>
-          </div>
-          <div class="app-user-dropdown">
-            <RouterLink v-if="isAdmin" class="app-user-dropdown-link" to="/admin/users">
+          </button>
+          <div
+            v-show="isUserMenuOpen"
+            id="user-menu-dropdown"
+            ref="userMenuDropdownRef"
+            class="app-user-dropdown"
+            role="menu"
+            tabindex="-1"
+          >
+            <RouterLink
+              v-if="isAdmin"
+              class="app-user-dropdown-link"
+              to="/admin/users"
+              role="menuitem"
+              @click="onUserMenuItemNavigate"
+            >
               <span class="app-user-dropdown-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                   <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
@@ -63,7 +185,7 @@ const onLogout = async () => {
               </span>
               <span>Users</span>
             </RouterLink>
-            <button type="button" class="app-user-dropdown-button" @click="onLogout">
+            <button type="button" class="app-user-dropdown-button" role="menuitem" @click="onLogout">
               <span class="app-user-dropdown-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                   <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
@@ -107,7 +229,7 @@ const onLogout = async () => {
 }
 
 .app-user-trigger {
-  @apply flex cursor-default items-center gap-1 text-slate-200;
+  @apply flex cursor-pointer items-center gap-1 rounded px-2 py-1 text-slate-200 transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40;
 }
 
 .app-user-trigger-user-icon {
@@ -127,21 +249,7 @@ const onLogout = async () => {
 }
 
 .app-user-dropdown {
-  @apply pointer-events-none absolute right-0 top-full z-20 min-w-44 rounded-md border border-slate-700 bg-slate-950 p-1 opacity-0 shadow-lg transition;
-}
-
-.app-user-dropdown::before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  left: 0;
-  right: 0;
-  height: 8px;
-}
-
-.app-user-menu:hover .app-user-dropdown,
-.app-user-menu:focus-within .app-user-dropdown {
-  @apply pointer-events-auto opacity-100;
+  @apply absolute right-0 top-full z-20 mt-1 min-w-44 rounded-md border border-slate-700 bg-slate-950 p-1 shadow-lg;
 }
 
 .app-user-dropdown-link,
