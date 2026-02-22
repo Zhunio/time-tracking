@@ -15,17 +15,17 @@ const {
 </script>
 
 <template>
-  <section class="time-tracking-edit-page">
+  <section class="time-tracking-edit-page app-panel">
     <header>
       <h1 class="time-tracking-edit-page-title">Edit Time Tracking</h1>
       <p class="time-tracking-edit-page-subtitle">Update a time tracking record.</p>
     </header>
 
-    <p v-if="errorMessage" class="time-tracking-edit-page-error">{{ errorMessage }}</p>
-    <p v-if="isLoading" class="time-tracking-edit-page-muted">Loading time tracking record...</p>
+    <p v-if="errorMessage" class="time-tracking-edit-page-error app-error">{{ errorMessage }}</p>
+    <p v-if="isLoading" class="time-tracking-edit-page-muted app-muted">Loading time tracking record...</p>
 
     <form v-else class="time-tracking-edit-page-form" @submit.prevent="onSaveTimeTracker">
-      <div class="time-tracking-edit-page-grid">
+      <div class="app-form-grid">
         <label class="app-form-field">
           <span class="app-form-label">Name</span>
           <div class="app-form-static">{{ userDisplayName }}</div>
@@ -47,26 +47,16 @@ const {
         </label>
       </div>
 
-      <div class="time-tracking-edit-page-actions">
-        <div class="time-tracking-edit-page-actions-main">
-          <button type="submit" :disabled="isSaving || isDeleting" class="time-tracking-edit-page-button">
+      <div class="app-actions">
+        <div class="app-actions-main">
+          <button type="submit" :disabled="isSaving || isDeleting" class="app-button-primary">
             {{ isSaving ? 'Saving...' : 'Save' }}
           </button>
-          <button
-            type="button"
-            class="time-tracking-edit-page-button-secondary"
-            :disabled="isSaving || isDeleting"
-            @click="onCancel"
-          >
+          <button type="button" class="app-button-secondary" :disabled="isSaving || isDeleting" @click="onCancel">
             Cancel
           </button>
         </div>
-        <button
-          type="button"
-          class="time-tracking-edit-page-button-danger"
-          :disabled="isSaving || isDeleting"
-          @click="onDeleteTimeTracker"
-        >
+        <button type="button" class="app-button-danger" :disabled="isSaving || isDeleting" @click="onDeleteTimeTracker">
           {{ isDeleting ? 'Deleting...' : 'Delete' }}
         </button>
       </div>
@@ -75,53 +65,31 @@ const {
 </template>
 
 <style scoped>
-@reference 'tailwindcss';
-
 .time-tracking-edit-page {
-  @apply space-y-6 bg-transparent p-0 text-slate-100;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .time-tracking-edit-page-title {
-  @apply text-2xl font-bold tracking-tight text-white;
+  margin: 0;
+  color: #f4f8ff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .time-tracking-edit-page-subtitle {
-  @apply mt-2 text-sm text-slate-400;
+  margin: 0.35rem 0 0;
+  color: var(--app-text-muted);
+  font-size: 0.92rem;
 }
 
 .time-tracking-edit-page-error {
-  @apply rounded-md border border-red-900/70 bg-red-950/60 p-3 text-sm text-red-300;
+  margin: 0;
 }
 
 .time-tracking-edit-page-muted {
-  @apply text-sm text-slate-400;
-}
-
-.time-tracking-edit-page-form {
-  @apply p-0;
-}
-
-.time-tracking-edit-page-grid {
-  @apply grid gap-3 md:grid-cols-2;
-}
-
-.time-tracking-edit-page-actions {
-  @apply mt-4 flex flex-wrap items-center justify-between gap-3;
-}
-
-.time-tracking-edit-page-actions-main {
-  @apply flex gap-2;
-}
-
-.time-tracking-edit-page-button {
-  @apply cursor-pointer rounded-md bg-emerald-300 px-3 py-1.5 text-sm font-medium text-emerald-950 transition duration-150 hover:bg-emerald-200 hover:shadow-sm disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-.time-tracking-edit-page-button-secondary {
-  @apply cursor-pointer rounded-md border border-slate-700 px-3 py-1.5 text-sm font-medium text-slate-200 transition duration-150 hover:border-slate-500 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-.time-tracking-edit-page-button-danger {
-  @apply cursor-pointer rounded-md bg-red-700 px-3 py-1.5 text-sm font-medium text-white transition duration-150 hover:bg-red-600 hover:shadow-sm disabled:cursor-not-allowed disabled:opacity-60;
+  margin: 0;
 }
 </style>

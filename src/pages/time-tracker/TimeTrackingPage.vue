@@ -104,54 +104,108 @@ const goToEditTimeTracker = async (entry: EntryRow) => {
 </template>
 
 <style scoped>
-@reference 'tailwindcss';
-
 .time-tracking-page {
-  @apply space-y-6 bg-transparent p-0 text-slate-100;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .time-tracking-page-header {
-  @apply flex items-center justify-between gap-4;
+  border: 1px solid var(--app-border);
+  border-radius: 14px;
+  background: linear-gradient(160deg, rgba(28, 42, 66, 0.95) 0%, rgba(18, 28, 45, 0.98) 100%);
+  padding: 1rem 1.1rem;
 }
 
 .time-tracking-page-title {
-  @apply text-2xl font-bold tracking-tight text-white;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f4f8ff;
+  letter-spacing: -0.02em;
 }
 
 .time-tracking-page-subtitle {
-  @apply mt-2 text-sm text-slate-400;
+  margin: 0.35rem 0 0;
+  color: var(--app-text-muted);
+  font-size: 0.92rem;
 }
 
 .time-tracking-controls {
-  @apply flex items-end justify-between gap-3;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .time-tracking-week-picker {
-  @apply flex flex-col gap-1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
 .time-tracking-week-label {
-  @apply text-[11px] font-semibold uppercase tracking-wide text-slate-400;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--app-text-muted);
 }
 
 .time-tracking-week-wrap {
-  @apply relative inline-flex min-w-56 items-center rounded-md border border-slate-700 bg-slate-950 px-3 py-1.5 text-slate-300 transition duration-150 hover:border-slate-500 focus-within:border-sky-500 focus-within:ring-2 focus-within:ring-sky-500/20;
+  position: relative;
+  display: inline-flex;
+  min-width: 16rem;
+  align-items: center;
+  border-radius: 9px;
+  border: 1px solid var(--app-border);
+  background: var(--app-surface-strong);
+  padding: 0.45rem 0.7rem;
+  color: #d8e7ff;
+  transition: border-color 0.15s ease;
+}
+
+.time-tracking-week-wrap:hover {
+  border-color: #48628e;
+}
+
+.time-tracking-week-wrap:focus-within {
+  border-color: #5ea4ff;
+  box-shadow: 0 0 0 3px rgba(94, 164, 255, 0.2);
 }
 
 .time-tracking-week-text {
-  @apply pr-7 text-sm font-medium text-slate-100;
+  padding-right: 1.6rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #ecf3ff;
 }
 
 .time-tracking-week-icon {
-  @apply pointer-events-none absolute right-2.5 inline-flex h-4 w-4 items-center justify-center text-slate-500;
+  pointer-events: none;
+  position: absolute;
+  right: 0.7rem;
+  display: inline-flex;
+  height: 1rem;
+  width: 1rem;
+  align-items: center;
+  justify-content: center;
+  color: #8fa8ce;
 }
 
 .time-tracking-week-icon svg {
-  @apply h-4 w-4;
+  height: 1rem;
+  width: 1rem;
 }
 
 .time-tracking-week-input {
-  @apply absolute inset-0 h-full w-full cursor-pointer opacity-0 outline-none;
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  opacity: 0;
 }
 
 .time-tracking-week-input::-webkit-calendar-picker-indicator {
@@ -159,99 +213,200 @@ const goToEditTimeTracker = async (entry: EntryRow) => {
 }
 
 .time-tracking-create-btn {
-  @apply cursor-pointer rounded-md bg-emerald-300 px-3 py-1.5 text-sm font-medium text-emerald-950 transition duration-150 hover:bg-emerald-200 hover:shadow-sm;
+  border: 0;
+  border-radius: 9px;
+  background: var(--app-accent);
+  color: #032923;
+  padding: 0.52rem 0.9rem;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.time-tracking-create-btn:hover {
+  background: #62e5d1;
 }
 
 .time-tracking-error {
-  @apply rounded-md border border-red-900/70 bg-red-950/60 p-3 text-sm text-red-300;
+  border: 1px solid #8a3040;
+  border-radius: 10px;
+  background: rgba(131, 34, 52, 0.25);
+  color: #ffb4c1;
+  padding: 0.65rem 0.8rem;
+  font-size: 0.92rem;
 }
 
 .time-tracking-muted {
-  @apply text-sm text-slate-400;
+  color: var(--app-text-muted);
+  font-size: 0.93rem;
 }
 
 .time-tracking-cards {
-  @apply grid gap-3 md:grid-cols-2 xl:grid-cols-3;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
 }
 
 .time-tracking-card {
-  @apply rounded-lg border border-slate-600 bg-slate-900/80 p-3;
+  border: 1px solid var(--app-border);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(26, 37, 58, 0.95) 0%, rgba(18, 27, 42, 0.98) 100%);
+  box-shadow: 0 8px 20px rgba(4, 8, 16, 0.3);
+  padding: 0.85rem 0.9rem;
 }
 
 .time-tracking-card-grid {
-  @apply grid grid-cols-[auto_1fr] items-stretch gap-2;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: stretch;
+  gap: 0.65rem;
 }
 
 .time-tracking-entries {
-  @apply flex flex-col items-end gap-0.5;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
 }
 
 .time-tracking-entry {
-  @apply flex items-center justify-end gap-1.5 rounded px-0.5 py-0.5 text-xs font-medium text-slate-400;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  border-radius: 8px;
+  padding: 0.22rem 0.35rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #b4c6e3;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.01em;
 }
 
 .time-tracking-entry--interactive {
-  @apply cursor-pointer transition-all duration-150;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .time-tracking-entry--interactive:hover {
-  @apply bg-slate-800/70 text-sky-300;
+  background: rgba(46, 67, 104, 0.7);
+  color: #bde2ff;
 }
 
 .time-tracking-entry-time {
+  color: #e8f1ff;
   text-decoration: none;
 }
 
 .time-tracking-entry--interactive:hover .time-tracking-entry-time {
   text-decoration: underline;
-  text-decoration-color: rgb(125 211 252 / 0.85);
+  text-decoration-color: rgba(141, 207, 255, 0.9);
   text-underline-offset: 2px;
 }
 
 .time-tracking-entry--interactive:hover .time-tracking-entry-icon,
 .time-tracking-entry--interactive:hover .time-tracking-entry-day {
-  @apply text-sky-400;
+  color: #7ec5ff;
 }
 
 .time-tracking-user-name {
-  @apply text-xl font-bold leading-none tracking-tight text-white;
+  color: #f5f8ff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .time-tracking-user {
-  @apply space-y-1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
 .time-tracking-total {
-  @apply mt-1 flex flex-col items-start gap-1;
+  margin: 0.15rem 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
 }
 
 .time-tracking-total-label {
-  @apply text-sm font-semibold uppercase tracking-wide text-slate-500;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #8ea3c6;
 }
 
 .time-tracking-total-value {
-  @apply inline-flex items-center rounded px-2 py-0.5 text-[11px] font-semibold text-emerald-200 bg-emerald-900/50;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.12rem 0.45rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #99f4e2;
+  background: rgba(28, 125, 111, 0.52);
 }
 
 .time-tracking-entry-day {
-  @apply inline-flex min-w-4 items-center justify-center font-semibold text-slate-500;
+  display: inline-flex;
+  min-width: 1rem;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #8ac7ff;
 }
 
 .time-tracking-entry-icon {
-  @apply inline-flex h-3.5 w-3.5 items-center justify-center text-slate-500;
+  display: inline-flex;
+  height: 0.86rem;
+  width: 0.86rem;
+  align-items: center;
+  justify-content: center;
+  color: #77a5d8;
 }
 
 .time-tracking-entry-icon svg {
-  @apply h-3.5 w-3.5;
+  height: 0.86rem;
+  width: 0.86rem;
 }
 
 .time-tracking-entry-placeholder {
-  @apply text-slate-500;
+  color: #6f85a8;
 }
 
 .time-tracking-hours {
-  @apply ml-2 inline-flex items-center rounded px-2 py-0.5 text-[11px] font-semibold text-emerald-200 bg-emerald-900/50;
+  margin-left: 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.12rem 0.42rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #9af4e2;
+  background: rgba(28, 125, 111, 0.52);
+}
+
+@media (max-width: 1024px) {
+  .time-tracking-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .time-tracking-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .time-tracking-week-wrap {
+    min-width: 13rem;
+  }
 }
 </style>

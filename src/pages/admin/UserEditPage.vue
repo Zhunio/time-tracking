@@ -166,18 +166,18 @@ onMounted(loadUser);
 </script>
 
 <template>
-  <section class="admin-edit-user">
+  <section class="admin-edit-user app-panel">
     <header>
       <h1 class="admin-edit-user-title">Edit User</h1>
       <p class="admin-edit-user-subtitle">Update user account details.</p>
     </header>
 
-    <p v-if="errorMessage" class="admin-edit-user-error">{{ errorMessage }}</p>
-    <p v-if="isLoading" class="admin-edit-user-muted">Loading user...</p>
+    <p v-if="errorMessage" class="admin-edit-user-error app-error">{{ errorMessage }}</p>
+    <p v-if="isLoading" class="admin-edit-user-muted app-muted">Loading user...</p>
 
     <div v-else class="admin-edit-user-sections">
       <form class="admin-edit-user-form" @submit.prevent="onSaveUser">
-        <div class="admin-edit-user-grid">
+        <div class="app-form-grid admin-edit-user-grid">
           <label class="app-form-field">
             <span class="app-form-label">First Name</span>
             <input v-model="form.firstName" type="text" required class="app-form-control" />
@@ -206,16 +206,12 @@ onMounted(loadUser);
 
         <div class="admin-edit-user-actions">
           <div class="admin-edit-user-actions-main">
-            <button
-              type="submit"
-              :disabled="isSaving || isDeleting || isResettingPassword"
-              class="admin-edit-user-button"
-            >
+            <button type="submit" :disabled="isSaving || isDeleting || isResettingPassword" class="app-button-primary">
               {{ isSaving ? 'Saving...' : 'Save' }}
             </button>
             <button
               type="button"
-              class="admin-edit-user-button-secondary"
+              class="app-button-secondary"
               :disabled="isSaving || isDeleting || isResettingPassword"
               @click="onCancel"
             >
@@ -224,7 +220,7 @@ onMounted(loadUser);
           </div>
           <button
             type="button"
-            class="admin-edit-user-button-danger"
+            class="app-button-danger"
             :disabled="isSaving || isDeleting || isResettingPassword"
             @click="onDeleteUser"
           >
@@ -235,34 +231,25 @@ onMounted(loadUser);
 
       <section class="admin-reset-password">
         <h2 class="admin-reset-password-title">Reset Password</h2>
-        <p class="admin-edit-user-muted">Set a new password for this user.</p>
+        <p class="admin-edit-user-muted app-muted">Set a new password for this user.</p>
 
-        <p v-if="resetPasswordError" class="admin-edit-user-error">{{ resetPasswordError }}</p>
-        <p v-if="resetPasswordSuccess" class="admin-reset-password-success">{{ resetPasswordSuccess }}</p>
+        <p v-if="resetPasswordError" class="admin-edit-user-error app-error">{{ resetPasswordError }}</p>
+        <p v-if="resetPasswordSuccess" class="admin-reset-password-success app-success">{{ resetPasswordSuccess }}</p>
 
         <form class="admin-reset-password-form" @submit.prevent="onResetPassword">
-          <div class="admin-edit-user-grid">
+          <div class="app-form-grid admin-edit-user-grid">
             <label class="app-form-field">
               <span class="app-form-label">New Password</span>
               <input v-model="resetPasswordForm.password" type="password" required class="app-form-control" />
             </label>
             <label class="app-form-field">
               <span class="app-form-label">Confirm Password</span>
-              <input
-                v-model="resetPasswordForm.confirmPassword"
-                type="password"
-                required
-                class="app-form-control"
-              />
+              <input v-model="resetPasswordForm.confirmPassword" type="password" required class="app-form-control" />
             </label>
           </div>
 
           <div class="admin-reset-password-actions">
-            <button
-              type="submit"
-              :disabled="isResettingPassword || isSaving || isDeleting"
-              class="admin-edit-user-button"
-            >
+            <button type="submit" :disabled="isResettingPassword || isSaving || isDeleting" class="app-button-primary">
               {{ isResettingPassword ? 'Resetting...' : 'Reset Password' }}
             </button>
           </div>
@@ -273,81 +260,92 @@ onMounted(loadUser);
 </template>
 
 <style scoped>
-@reference 'tailwindcss';
-
 .admin-edit-user {
-  @apply space-y-6 bg-transparent p-0 text-slate-100;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .admin-edit-user-title {
-  @apply text-2xl font-bold tracking-tight text-white;
+  margin: 0;
+  color: #f4f8ff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .admin-edit-user-subtitle {
-  @apply mt-2 text-sm text-slate-400;
+  margin: 0.35rem 0 0;
+  color: var(--app-text-muted);
+  font-size: 0.92rem;
 }
 
 .admin-edit-user-error {
-  @apply rounded-md border border-red-900/70 bg-red-950/60 p-3 text-sm text-red-300;
+  margin: 0;
 }
 
 .admin-edit-user-muted {
-  @apply text-sm text-slate-400;
-}
-
-.admin-edit-user-form {
-  @apply p-0;
+  margin: 0;
 }
 
 .admin-edit-user-sections {
-  @apply space-y-8;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
 }
 
 .admin-edit-user-grid {
-  @apply grid gap-3 md:grid-cols-2;
+  align-items: end;
 }
 
 .admin-edit-user-checkbox {
-  @apply flex items-center gap-2 pt-2 md:col-span-2;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding-top: 0.25rem;
+  grid-column: 1 / -1;
+  color: #d9e7fb;
+  font-size: 0.92rem;
 }
 
 .admin-edit-user-checkbox-input {
-  @apply accent-emerald-300;
-}
-
-.admin-edit-user-actions {
-  @apply mt-4 flex flex-wrap items-center justify-between gap-3;
-}
-
-.admin-edit-user-actions-main {
-  @apply flex gap-2;
-}
-
-.admin-edit-user-button {
-  @apply cursor-pointer rounded-md bg-emerald-300 px-3 py-1.5 text-sm font-medium text-emerald-950 transition duration-150 hover:bg-emerald-200 hover:shadow-sm disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-.admin-edit-user-button-secondary {
-  @apply cursor-pointer rounded-md border border-slate-700 px-3 py-1.5 text-sm font-medium text-slate-200 transition duration-150 hover:border-slate-500 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-.admin-edit-user-button-danger {
-  @apply cursor-pointer rounded-md bg-red-700 px-3 py-1.5 text-sm font-medium text-white transition duration-150 hover:bg-red-600 hover:shadow-sm disabled:cursor-not-allowed disabled:opacity-60;
+  accent-color: var(--app-accent);
 }
 
 .admin-reset-password {
-  @apply space-y-3 border-t border-slate-800 pt-6;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--app-border-soft);
 }
 
 .admin-reset-password-title {
-  @apply text-lg font-semibold text-white;
+  margin: 0;
+  color: #f4f8ff;
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
 .admin-reset-password-success {
-  @apply rounded-md border border-emerald-900/70 bg-emerald-950/50 p-3 text-sm text-emerald-300;
+  margin: 0;
 }
 
 .admin-reset-password-actions {
-  @apply mt-4;
+  margin-top: 0.5rem;
+}
+
+.admin-edit-user-actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+}
+
+.admin-edit-user-actions-main {
+  display: flex;
+  gap: 0.55rem;
 }
 </style>

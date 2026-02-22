@@ -115,7 +115,7 @@ watch(
   () => route.fullPath,
   () => {
     closeUserMenu();
-  }
+  },
 );
 
 onMounted(() => {
@@ -206,66 +206,150 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-@reference 'tailwindcss';
-
 .app-shell {
-  @apply min-h-screen bg-slate-950 text-white;
+  min-height: 100vh;
+  color: var(--app-text);
 }
 
 .app-header {
-  @apply border-b border-slate-800 bg-black;
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  border-bottom: 1px solid var(--app-border);
+  background: linear-gradient(180deg, var(--app-navbar) 0%, #101b31 100%);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
 }
 
 .app-nav {
-  @apply mx-auto flex max-w-5xl items-center gap-4 px-4 py-3;
+  margin: 0 auto;
+  max-width: 1120px;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.15rem;
 }
 
 .app-brand {
-  @apply font-semibold text-white;
+  color: #f7fbff;
+  font-size: 1.02rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.01em;
 }
 
 .app-user-menu {
-  @apply relative ml-auto;
+  position: relative;
+  margin-left: auto;
 }
 
 .app-user-trigger {
-  @apply flex cursor-pointer items-center gap-1 rounded px-2 py-1 text-slate-200 transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  background: rgba(30, 44, 69, 0.6);
+  color: #d8e7ff;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.app-user-trigger:hover {
+  background: rgba(37, 57, 88, 0.95);
+  border-color: #3b4f72;
+}
+
+.app-user-trigger:focus-visible {
+  outline: none;
+  border-color: #68adff;
+  box-shadow: 0 0 0 3px rgba(104, 173, 255, 0.2);
 }
 
 .app-user-trigger-user-icon {
-  @apply inline-flex h-4 w-4 items-center justify-center text-slate-300;
+  display: inline-flex;
+  height: 1rem;
+  width: 1rem;
+  align-items: center;
+  justify-content: center;
+  color: #b7cae8;
 }
 
 .app-user-trigger-user-icon svg {
-  @apply h-4 w-4;
+  height: 1rem;
+  width: 1rem;
 }
 
 .app-user-trigger-icon {
-  @apply inline-flex h-4 w-4 items-center justify-center text-slate-300;
+  display: inline-flex;
+  height: 0.95rem;
+  width: 0.95rem;
+  align-items: center;
+  justify-content: center;
+  color: #b7cae8;
 }
 
 .app-user-trigger-icon svg {
-  @apply h-4 w-4;
+  height: 0.95rem;
+  width: 0.95rem;
 }
 
 .app-user-dropdown {
-  @apply absolute right-0 top-full z-20 mt-1 min-w-44 rounded-md border border-slate-700 bg-slate-950 p-1 shadow-lg;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.35rem);
+  z-index: 20;
+  min-width: 11rem;
+  border: 1px solid var(--app-border);
+  border-radius: 10px;
+  background: #101a2d;
+  padding: 0.35rem;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.38);
 }
 
 .app-user-dropdown-link,
 .app-user-dropdown-button {
-  @apply flex w-full cursor-pointer items-center gap-2 rounded px-3 py-2 text-left text-sm text-slate-200 transition hover:bg-slate-800 hover:text-white;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.5rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #d8e6fb;
+  padding: 0.48rem 0.65rem;
+  font-size: 0.85rem;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.app-user-dropdown-link:hover,
+.app-user-dropdown-button:hover {
+  background: #1f2b43;
+  color: #ffffff;
 }
 
 .app-user-dropdown-icon {
-  @apply inline-flex h-4 w-4 shrink-0 items-center justify-center text-slate-300;
+  display: inline-flex;
+  height: 1rem;
+  width: 1rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: #9eb4d9;
 }
 
 .app-user-dropdown-icon svg {
-  @apply h-4 w-4;
+  height: 1rem;
+  width: 1rem;
 }
 
 .app-main {
-  @apply mx-auto max-w-5xl px-4 py-8;
+  margin: 0 auto;
+  max-width: 1120px;
+  padding: 1.3rem 1.15rem 2rem;
 }
 </style>

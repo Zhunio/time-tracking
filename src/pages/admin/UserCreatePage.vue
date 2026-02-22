@@ -58,16 +58,16 @@ const onCancel = async () => {
 </script>
 
 <template>
-  <section class="admin-create-user">
+  <section class="admin-create-user app-panel">
     <header>
       <h1 class="admin-create-user-title">Create User</h1>
       <p class="admin-create-user-subtitle">Add a new user account.</p>
     </header>
 
-    <p v-if="errorMessage" class="admin-create-user-error">{{ errorMessage }}</p>
+    <p v-if="errorMessage" class="admin-create-user-error app-error">{{ errorMessage }}</p>
 
     <form class="admin-create-user-form" @submit.prevent="onCreateUser">
-      <div class="admin-create-user-grid">
+      <div class="app-form-grid admin-create-user-grid">
         <label class="app-form-field">
           <span class="app-form-label">First Name</span>
           <input v-model="form.firstName" type="text" required class="app-form-control" />
@@ -99,14 +99,12 @@ const onCancel = async () => {
         </label>
       </div>
 
-      <div class="admin-create-user-actions">
-        <div class="admin-create-user-actions-main">
-          <button type="submit" :disabled="isCreating" class="admin-create-user-button">
+      <div class="app-actions">
+        <div class="app-actions-main">
+          <button type="submit" :disabled="isCreating" class="app-button-primary">
             {{ isCreating ? 'Creating...' : 'Create' }}
           </button>
-          <button type="button" class="admin-create-user-button-secondary" :disabled="isCreating" @click="onCancel">
-            Cancel
-          </button>
+          <button type="button" class="app-button-secondary" :disabled="isCreating" @click="onCancel">Cancel</button>
         </div>
       </div>
     </form>
@@ -114,53 +112,45 @@ const onCancel = async () => {
 </template>
 
 <style scoped>
-@reference 'tailwindcss';
-
 .admin-create-user {
-  @apply space-y-6 text-slate-100;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .admin-create-user-title {
-  @apply text-2xl font-bold tracking-tight text-white;
+  margin: 0;
+  color: #f4f8ff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .admin-create-user-subtitle {
-  @apply mt-2 text-sm text-slate-400;
+  margin: 0.35rem 0 0;
+  color: var(--app-text-muted);
+  font-size: 0.92rem;
 }
 
 .admin-create-user-error {
-  @apply rounded-md border border-red-900/70 bg-red-950/60 p-3 text-sm text-red-300;
-}
-
-.admin-create-user-form {
-  @apply p-0;
+  margin: 0;
 }
 
 .admin-create-user-grid {
-  @apply grid gap-3 md:grid-cols-2;
+  align-items: end;
 }
 
 .admin-create-user-checkbox {
-  @apply flex items-center gap-2 pt-2 md:col-span-2;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding-top: 0.25rem;
+  grid-column: 1 / -1;
+  color: #d9e7fb;
+  font-size: 0.92rem;
 }
 
 .admin-create-user-field-password {
-  @apply md:col-span-2;
-}
-
-.admin-create-user-actions {
-  @apply mt-4 flex flex-wrap items-center justify-between gap-3;
-}
-
-.admin-create-user-actions-main {
-  @apply flex gap-2;
-}
-
-.admin-create-user-button {
-  @apply cursor-pointer rounded-md bg-emerald-300 px-3 py-1.5 text-sm font-medium text-emerald-950 transition duration-150 hover:bg-emerald-200 hover:shadow-sm disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-.admin-create-user-button-secondary {
-  @apply cursor-pointer rounded-md border border-slate-700 px-3 py-1.5 text-sm font-medium text-slate-200 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60;
+  grid-column: 1 / -1;
 }
 </style>

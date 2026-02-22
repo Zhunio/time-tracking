@@ -6,16 +6,16 @@ const { form, users, isAdmin, isCreating, isLoadingUsers, errorMessage, onCreate
 </script>
 
 <template>
-  <section class="time-tracking-create-page">
+  <section class="time-tracking-create-page app-panel">
     <header>
       <h1 class="time-tracking-create-page-title">Create Time Tracking</h1>
       <p class="time-tracking-create-page-subtitle">Add a new time tracking record.</p>
     </header>
 
-    <p v-if="errorMessage" class="time-tracking-create-page-error">{{ errorMessage }}</p>
+    <p v-if="errorMessage" class="time-tracking-create-page-error app-error">{{ errorMessage }}</p>
 
     <form class="time-tracking-create-page-form" @submit.prevent="onCreateTimeTracker">
-      <div class="time-tracking-create-page-grid">
+      <div class="app-form-grid">
         <label class="app-form-field" v-if="isAdmin">
           <span class="app-form-label">Name</span>
           <select
@@ -58,19 +58,12 @@ const { form, users, isAdmin, isCreating, isLoadingUsers, errorMessage, onCreate
         </label>
       </div>
 
-      <div class="time-tracking-create-page-actions">
-        <div class="time-tracking-create-page-actions-main">
-          <button type="submit" :disabled="isCreating" class="time-tracking-create-page-button">
+      <div class="app-actions">
+        <div class="app-actions-main">
+          <button type="submit" :disabled="isCreating" class="app-button-primary">
             {{ isCreating ? 'Creating...' : 'Create' }}
           </button>
-          <button
-            type="button"
-            class="time-tracking-create-page-button-secondary"
-            :disabled="isCreating"
-            @click="onCancel"
-          >
-            Cancel
-          </button>
+          <button type="button" class="app-button-secondary" :disabled="isCreating" @click="onCancel">Cancel</button>
         </div>
       </div>
     </form>
@@ -78,45 +71,27 @@ const { form, users, isAdmin, isCreating, isLoadingUsers, errorMessage, onCreate
 </template>
 
 <style scoped>
-@reference 'tailwindcss';
-
 .time-tracking-create-page {
-  @apply space-y-6 text-slate-100;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .time-tracking-create-page-title {
-  @apply text-2xl font-bold tracking-tight text-white;
+  margin: 0;
+  color: #f4f8ff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .time-tracking-create-page-subtitle {
-  @apply mt-2 text-sm text-slate-400;
+  margin: 0.35rem 0 0;
+  color: var(--app-text-muted);
+  font-size: 0.92rem;
 }
 
 .time-tracking-create-page-error {
-  @apply rounded-md border border-red-900/70 bg-red-950/60 p-3 text-sm text-red-300;
-}
-
-.time-tracking-create-page-form {
-  @apply p-0;
-}
-
-.time-tracking-create-page-grid {
-  @apply grid gap-3 md:grid-cols-2;
-}
-
-.time-tracking-create-page-actions {
-  @apply mt-4 flex flex-wrap items-center justify-between gap-3;
-}
-
-.time-tracking-create-page-actions-main {
-  @apply flex gap-2;
-}
-
-.time-tracking-create-page-button {
-  @apply cursor-pointer rounded-md bg-emerald-300 px-3 py-1.5 text-sm font-medium text-emerald-950 transition duration-150 hover:bg-emerald-200 hover:shadow-sm disabled:cursor-not-allowed disabled:opacity-60;
-}
-
-.time-tracking-create-page-button-secondary {
-  @apply cursor-pointer rounded-md border border-slate-700 px-3 py-1.5 text-sm font-medium text-slate-200 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60;
+  margin: 0;
 }
 </style>
