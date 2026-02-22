@@ -7,7 +7,6 @@ const password = ref('');
 const confirmPassword = ref('');
 
 const onSubmit = () => {
-  // Placeholder until auth backend is connected.
   console.log('Register submit', {
     name: name.value,
     email: email.value,
@@ -18,65 +17,46 @@ const onSubmit = () => {
 </script>
 
 <template>
-  <section class="register-card app-panel">
-    <h1 class="register-title">Create Account</h1>
-    <p class="register-subtitle">Register to start tracking your time.</p>
+  <div class="columns is-centered">
+    <div class="column is-full-mobile is-two-thirds-tablet is-half-desktop">
+      <h1 class="title is-3">Create Account</h1>
+      <p class="subtitle is-6">Register to start tracking your time.</p>
 
-    <form class="register-form" @submit.prevent="onSubmit">
-      <label class="app-form-field">
-        <span class="app-form-label">Full Name</span>
-        <input v-model="name" type="text" required class="app-form-control" placeholder="Jane Doe" />
-      </label>
+      <form @submit.prevent="onSubmit">
+        <div class="field">
+          <label class="label">Full Name</label>
+          <div class="control">
+            <input v-model="name" type="text" required class="input" placeholder="Jane Doe" />
+          </div>
+        </div>
 
-      <label class="app-form-field">
-        <span class="app-form-label">Email</span>
-        <input v-model="email" type="email" required class="app-form-control" placeholder="you@example.com" />
-      </label>
+        <div class="field">
+          <label class="label">Email</label>
+          <div class="control">
+            <input v-model="email" type="email" required class="input" placeholder="you@example.com" />
+          </div>
+        </div>
 
-      <label class="app-form-field">
-        <span class="app-form-label">Password</span>
-        <input v-model="password" type="password" required class="app-form-control" placeholder="••••••••" />
-      </label>
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="control">
+            <input v-model="password" type="password" required class="input" placeholder="••••••••" />
+          </div>
+        </div>
 
-      <label class="app-form-field">
-        <span class="app-form-label">Confirm Password</span>
-        <input v-model="confirmPassword" type="password" required class="app-form-control" placeholder="••••••••" />
-      </label>
+        <div class="field">
+          <label class="label">Confirm Password</label>
+          <div class="control">
+            <input v-model="confirmPassword" type="password" required class="input" placeholder="••••••••" />
+          </div>
+        </div>
 
-      <button type="submit" class="app-button-primary register-submit-button">Create Account</button>
-    </form>
-  </section>
+        <div class="field">
+          <div class="control">
+            <button type="submit" class="button is-primary is-fullwidth">Create Account</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </template>
-
-<style scoped>
-.register-card {
-  max-width: 30rem;
-  margin: 2.5rem auto 0;
-}
-
-.register-title {
-  margin: 0;
-  color: #f4f8ff;
-  font-size: 1.55rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.register-subtitle {
-  margin: 0.35rem 0 0;
-  color: var(--app-text-muted);
-  font-size: 0.92rem;
-}
-
-.register-form {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.register-submit-button {
-  width: 100%;
-  margin-top: 0.2rem;
-}
-</style>

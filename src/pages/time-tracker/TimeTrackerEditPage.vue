@@ -15,81 +15,64 @@ const {
 </script>
 
 <template>
-  <section class="time-tracking-edit-page">
-    <header>
-      <h1 class="time-tracking-edit-page-title">Edit Time Tracking</h1>
-      <p class="time-tracking-edit-page-subtitle">Update a time tracking record.</p>
-    </header>
+  <section class="section p-0">
+    <h1 class="title is-3">Edit Time Tracking</h1>
+    <p class="subtitle is-6">Update a time tracking record.</p>
 
-    <p v-if="errorMessage" class="time-tracking-edit-page-error app-error">{{ errorMessage }}</p>
-    <p v-if="isLoading" class="time-tracking-edit-page-muted app-muted">Loading time tracking record...</p>
+    <article v-if="errorMessage" class="message is-danger is-light">
+      <div class="message-body">{{ errorMessage }}</div>
+    </article>
 
-    <form v-else class="time-tracking-edit-page-form" @submit.prevent="onSaveTimeTracker">
-      <div class="app-form-grid">
-        <label class="app-form-field">
-          <span class="app-form-label">Name</span>
-          <div class="app-form-static">{{ userDisplayName }}</div>
-        </label>
+    <p v-if="isLoading" class="has-text-grey-light">Loading time tracking record...</p>
 
-        <label class="app-form-field">
-          <span class="app-form-label">Date</span>
-          <input v-model="form.date" type="date" required class="app-form-control" />
-        </label>
+    <form v-else @submit.prevent="onSaveTimeTracker">
+      <div class="columns is-multiline">
+        <div class="column is-half">
+          <div class="field">
+            <label class="label">Name</label>
+            <div class="control">
+              <input :value="userDisplayName" type="text" readonly class="input" />
+            </div>
+          </div>
+        </div>
 
-        <label class="app-form-field">
-          <span class="app-form-label">Start Time</span>
-          <input v-model="form.startTime" type="time" required class="app-form-control" />
-        </label>
+        <div class="column is-half">
+          <div class="field">
+            <label class="label">Date</label>
+            <div class="control">
+              <input v-model="form.date" type="date" required class="input" />
+            </div>
+          </div>
+        </div>
 
-        <label class="app-form-field">
-          <span class="app-form-label">End Time</span>
-          <input v-model="form.endTime" type="time" required class="app-form-control" />
-        </label>
+        <div class="column is-half">
+          <div class="field">
+            <label class="label">Start Time</label>
+            <div class="control">
+              <input v-model="form.startTime" type="time" required class="input" />
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="field">
+            <label class="label">End Time</label>
+            <div class="control">
+              <input v-model="form.endTime" type="time" required class="input" />
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="app-actions">
-        <div class="app-actions-main">
-          <button type="submit" :disabled="isSaving || isDeleting" class="app-button-primary">
-            {{ isSaving ? 'Saving...' : 'Save' }}
-          </button>
-          <button type="button" class="app-button-secondary" :disabled="isSaving || isDeleting" @click="onCancel">
-            Cancel
-          </button>
-        </div>
-        <button type="button" class="app-button-danger" :disabled="isSaving || isDeleting" @click="onDeleteTimeTracker">
+      <div class="buttons mt-2">
+        <button type="submit" :disabled="isSaving || isDeleting" class="button is-primary">
+          {{ isSaving ? 'Saving...' : 'Save' }}
+        </button>
+        <button type="button" class="button" :disabled="isSaving || isDeleting" @click="onCancel">Cancel</button>
+        <button type="button" class="button is-danger" :disabled="isSaving || isDeleting" @click="onDeleteTimeTracker">
           {{ isDeleting ? 'Deleting...' : 'Delete' }}
         </button>
       </div>
     </form>
   </section>
 </template>
-
-<style scoped>
-.time-tracking-edit-page {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.time-tracking-edit-page-title {
-  margin: 0;
-  color: #f4f8ff;
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.time-tracking-edit-page-subtitle {
-  margin: 0.35rem 0 0;
-  color: var(--app-text-muted);
-  font-size: 0.92rem;
-}
-
-.time-tracking-edit-page-error {
-  margin: 0;
-}
-
-.time-tracking-edit-page-muted {
-  margin: 0;
-}
-</style>

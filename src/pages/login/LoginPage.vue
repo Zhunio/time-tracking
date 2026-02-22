@@ -10,7 +10,6 @@ const errorMessage = ref('');
 const router = useRouter();
 
 const onLogin = async () => {
-  // Prevent duplicate submissions while the first login request is still in flight.
   if (isLoading.value) {
     return;
   }
@@ -34,63 +33,38 @@ const onLogin = async () => {
 </script>
 
 <template>
-  <section class="login-card app-panel">
-    <h1 class="login-title">Login</h1>
-    <p class="login-subtitle">Sign in to access your time tracking dashboard.</p>
+  <div class="columns is-centered">
+    <div class="column is-full-mobile is-two-thirds-tablet is-half-desktop">
+      <h1 class="title is-3">Login</h1>
+      <p class="subtitle is-6">Sign in to access your time tracking dashboard.</p>
 
-    <form class="login-form" @submit.prevent="onLogin">
-      <label class="app-form-field">
-        <span class="app-form-label">Email</span>
-        <input v-model="email" type="email" required class="app-form-control" placeholder="you@example.com" />
-      </label>
+      <form @submit.prevent="onLogin">
+        <div class="field">
+          <label class="label">Email</label>
+          <div class="control">
+            <input v-model="email" type="email" required class="input" placeholder="you@example.com" />
+          </div>
+        </div>
 
-      <label class="app-form-field">
-        <span class="app-form-label">Password</span>
-        <input v-model="password" type="password" required class="app-form-control" placeholder="••••••••" />
-      </label>
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="control">
+            <input v-model="password" type="password" required class="input" placeholder="••••••••" />
+          </div>
+        </div>
 
-      <button type="submit" :disabled="isLoading" class="app-button-primary login-submit-button">
-        {{ isLoading ? 'Signing In...' : 'Sign In' }}
-      </button>
+        <div class="field">
+          <div class="control">
+            <button type="submit" :disabled="isLoading" class="button is-primary is-fullwidth">
+              {{ isLoading ? 'Signing In...' : 'Sign In' }}
+            </button>
+          </div>
+        </div>
 
-      <p v-if="errorMessage" class="login-error app-error">{{ errorMessage }}</p>
-    </form>
-  </section>
+        <article v-if="errorMessage" class="message is-danger is-light">
+          <div class="message-body">{{ errorMessage }}</div>
+        </article>
+      </form>
+    </div>
+  </div>
 </template>
-
-<style scoped>
-.login-card {
-  max-width: 30rem;
-  margin: 2.5rem auto 0;
-}
-
-.login-title {
-  margin: 0;
-  color: #f4f8ff;
-  font-size: 1.55rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.login-subtitle {
-  margin: 0.35rem 0 0;
-  color: var(--app-text-muted);
-  font-size: 0.92rem;
-}
-
-.login-form {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.login-submit-button {
-  width: 100%;
-  margin-top: 0.2rem;
-}
-
-.login-error {
-  margin: 0;
-}
-</style>

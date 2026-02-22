@@ -166,61 +166,77 @@ onMounted(loadUser);
 </script>
 
 <template>
-  <section class="admin-edit-user">
-    <header>
-      <h1 class="admin-edit-user-title">Edit User</h1>
-      <p class="admin-edit-user-subtitle">Update user account details.</p>
-    </header>
+  <section class="section p-0">
+    <h1 class="title is-3">Edit User</h1>
+    <p class="subtitle is-6">Update user account details.</p>
 
-    <p v-if="errorMessage" class="admin-edit-user-error app-error">{{ errorMessage }}</p>
-    <p v-if="isLoading" class="admin-edit-user-muted app-muted">Loading user...</p>
+    <article v-if="errorMessage" class="message is-danger is-light">
+      <div class="message-body">{{ errorMessage }}</div>
+    </article>
+    <p v-if="isLoading" class="has-text-grey-light">Loading user...</p>
 
-    <div v-else class="admin-edit-user-sections">
-      <form class="admin-edit-user-form" @submit.prevent="onSaveUser">
-        <div class="app-form-grid admin-edit-user-grid">
-          <label class="app-form-field">
-            <span class="app-form-label">First Name</span>
-            <input v-model="form.firstName" type="text" required class="app-form-control" />
-          </label>
+    <div v-else>
+      <form @submit.prevent="onSaveUser">
+        <div class="columns is-multiline">
+          <div class="column is-half">
+            <div class="field">
+              <label class="label">First Name</label>
+              <div class="control">
+                <input v-model="form.firstName" type="text" required class="input" />
+              </div>
+            </div>
+          </div>
 
-          <label class="app-form-field">
-            <span class="app-form-label">Last Name</span>
-            <input v-model="form.lastName" type="text" required class="app-form-control" />
-          </label>
+          <div class="column is-half">
+            <div class="field">
+              <label class="label">Last Name</label>
+              <div class="control">
+                <input v-model="form.lastName" type="text" required class="input" />
+              </div>
+            </div>
+          </div>
 
-          <label class="app-form-field">
-            <span class="app-form-label">Email</span>
-            <input v-model="form.email" type="email" required class="app-form-control" />
-          </label>
+          <div class="column is-half">
+            <div class="field">
+              <label class="label">Email</label>
+              <div class="control">
+                <input v-model="form.email" type="email" required class="input" />
+              </div>
+            </div>
+          </div>
 
-          <label class="app-form-field">
-            <span class="app-form-label">Date of Birth</span>
-            <input v-model="form.dateOfBirth" type="date" required class="app-form-control" />
-          </label>
+          <div class="column is-half">
+            <div class="field">
+              <label class="label">Date of Birth</label>
+              <div class="control">
+                <input v-model="form.dateOfBirth" type="date" required class="input" />
+              </div>
+            </div>
+          </div>
 
-          <label class="admin-edit-user-checkbox">
-            <input v-model="form.isAdmin" type="checkbox" class="admin-edit-user-checkbox-input" />
-            <span>Admin user</span>
-          </label>
+          <div class="column is-full">
+            <label class="checkbox">
+              <input v-model="form.isAdmin" type="checkbox" />
+              Admin user
+            </label>
+          </div>
         </div>
 
-        <div class="admin-edit-user-actions">
-          <div class="admin-edit-user-actions-main">
-            <button type="submit" :disabled="isSaving || isDeleting || isResettingPassword" class="app-button-primary">
-              {{ isSaving ? 'Saving...' : 'Save' }}
-            </button>
-            <button
-              type="button"
-              class="app-button-secondary"
-              :disabled="isSaving || isDeleting || isResettingPassword"
-              @click="onCancel"
-            >
-              Cancel
-            </button>
-          </div>
+        <div class="buttons mt-2">
+          <button type="submit" :disabled="isSaving || isDeleting || isResettingPassword" class="button is-primary">
+            {{ isSaving ? 'Saving...' : 'Save' }}
+          </button>
           <button
             type="button"
-            class="app-button-danger"
+            class="button"
+            :disabled="isSaving || isDeleting || isResettingPassword"
+            @click="onCancel"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="button is-danger"
             :disabled="isSaving || isDeleting || isResettingPassword"
             @click="onDeleteUser"
           >
@@ -229,27 +245,41 @@ onMounted(loadUser);
         </div>
       </form>
 
-      <section class="admin-reset-password">
-        <h2 class="admin-reset-password-title">Reset Password</h2>
-        <p class="admin-edit-user-muted app-muted">Set a new password for this user.</p>
+      <hr />
 
-        <p v-if="resetPasswordError" class="admin-edit-user-error app-error">{{ resetPasswordError }}</p>
-        <p v-if="resetPasswordSuccess" class="admin-reset-password-success app-success">{{ resetPasswordSuccess }}</p>
+      <section>
+        <h2 class="title is-5">Reset Password</h2>
+        <p class="has-text-grey-light mb-3">Set a new password for this user.</p>
 
-        <form class="admin-reset-password-form" @submit.prevent="onResetPassword">
-          <div class="app-form-grid admin-edit-user-grid">
-            <label class="app-form-field">
-              <span class="app-form-label">New Password</span>
-              <input v-model="resetPasswordForm.password" type="password" required class="app-form-control" />
-            </label>
-            <label class="app-form-field">
-              <span class="app-form-label">Confirm Password</span>
-              <input v-model="resetPasswordForm.confirmPassword" type="password" required class="app-form-control" />
-            </label>
+        <article v-if="resetPasswordError" class="message is-danger is-light">
+          <div class="message-body">{{ resetPasswordError }}</div>
+        </article>
+        <article v-if="resetPasswordSuccess" class="message is-success is-light">
+          <div class="message-body">{{ resetPasswordSuccess }}</div>
+        </article>
+
+        <form @submit.prevent="onResetPassword">
+          <div class="columns is-multiline">
+            <div class="column is-half">
+              <div class="field">
+                <label class="label">New Password</label>
+                <div class="control">
+                  <input v-model="resetPasswordForm.password" type="password" required class="input" />
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="field">
+                <label class="label">Confirm Password</label>
+                <div class="control">
+                  <input v-model="resetPasswordForm.confirmPassword" type="password" required class="input" />
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="admin-reset-password-actions">
-            <button type="submit" :disabled="isResettingPassword || isSaving || isDeleting" class="app-button-primary">
+          <div class="buttons">
+            <button type="submit" :disabled="isResettingPassword || isSaving || isDeleting" class="button is-primary">
               {{ isResettingPassword ? 'Resetting...' : 'Reset Password' }}
             </button>
           </div>
@@ -258,100 +288,3 @@ onMounted(loadUser);
     </div>
   </section>
 </template>
-
-<style scoped>
-.admin-edit-user {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.admin-edit-user-title {
-  margin: 0;
-  color: #f4f8ff;
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.admin-edit-user-subtitle {
-  margin: 0.35rem 0 0;
-  color: var(--app-text-muted);
-  font-size: 0.92rem;
-}
-
-.admin-edit-user-error {
-  margin: 0;
-}
-
-.admin-edit-user-muted {
-  margin: 0;
-}
-
-.admin-edit-user-sections {
-  display: flex;
-  flex-direction: column;
-  gap: 1.4rem;
-}
-
-.admin-edit-user-grid {
-  align-items: end;
-}
-
-.admin-edit-user-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding-top: 0.25rem;
-  grid-column: 1 / -1;
-  color: #d9e7fb;
-  font-size: 0.92rem;
-}
-
-.admin-edit-user-checkbox-input {
-  accent-color: var(--app-accent);
-}
-
-.admin-reset-password {
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--app-border-soft);
-}
-
-.admin-reset-password-title {
-  margin: 0;
-  color: #f4f8ff;
-  font-size: 1.2rem;
-  font-weight: 700;
-}
-
-.admin-reset-password-success {
-  margin: 0;
-}
-
-.admin-reset-password-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.admin-reset-password-actions {
-  margin-top: 0;
-}
-
-.admin-edit-user-actions {
-  margin-top: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.7rem;
-}
-
-.admin-edit-user-actions-main {
-  display: flex;
-  gap: 0.55rem;
-}
-</style>

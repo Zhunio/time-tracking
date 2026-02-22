@@ -6,92 +6,75 @@ const { form, users, isAdmin, isCreating, isLoadingUsers, errorMessage, onCreate
 </script>
 
 <template>
-  <section class="time-tracking-create-page">
-    <header>
-      <h1 class="time-tracking-create-page-title">Create Time Tracking</h1>
-      <p class="time-tracking-create-page-subtitle">Add a new time tracking record.</p>
-    </header>
+  <section class="section p-0">
+    <h1 class="title is-3">Create Time Tracking</h1>
+    <p class="subtitle is-6">Add a new time tracking record.</p>
 
-    <p v-if="errorMessage" class="time-tracking-create-page-error app-error">{{ errorMessage }}</p>
+    <article v-if="errorMessage" class="message is-danger is-light">
+      <div class="message-body">{{ errorMessage }}</div>
+    </article>
 
-    <form class="time-tracking-create-page-form" @submit.prevent="onCreateTimeTracker">
-      <div class="app-form-grid">
-        <label class="app-form-field" v-if="isAdmin">
-          <span class="app-form-label">Name</span>
-          <select
-            v-model="form.userId"
-            required
-            :disabled="isLoadingUsers || isCreating"
-            class="app-form-control app-form-select"
-          >
-            <option value="" disabled>{{ isLoadingUsers ? 'Loading users...' : 'Select a user' }}</option>
-            <option v-for="user in users" :key="user.id" :value="user.id">
-              {{ user.firstName }} {{ user.lastName }}
-            </option>
-          </select>
-        </label>
+    <form @submit.prevent="onCreateTimeTracker">
+      <div class="columns is-multiline">
+        <div class="column is-half" v-if="isAdmin">
+          <div class="field">
+            <label class="label">Name</label>
+            <div class="control">
+              <div class="select is-fullwidth">
+                <select v-model="form.userId" required :disabled="isLoadingUsers || isCreating">
+                  <option value="" disabled>{{ isLoadingUsers ? 'Loading users...' : 'Select a user' }}</option>
+                  <option v-for="user in users" :key="user.id" :value="user.id">
+                    {{ user.firstName }} {{ user.lastName }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <label class="app-form-field" v-else>
-          <span class="app-form-label">User ID</span>
-          <input
-            v-model="form.userId"
-            type="text"
-            required
-            readonly
-            class="app-form-control app-form-control-readonly"
-          />
-        </label>
+        <div class="column is-half" v-else>
+          <div class="field">
+            <label class="label">User ID</label>
+            <div class="control">
+              <input v-model="form.userId" type="text" required readonly class="input" />
+            </div>
+          </div>
+        </div>
 
-        <label class="app-form-field">
-          <span class="app-form-label">Date</span>
-          <input v-model="form.date" type="date" required class="app-form-control" />
-        </label>
+        <div class="column is-half">
+          <div class="field">
+            <label class="label">Date</label>
+            <div class="control">
+              <input v-model="form.date" type="date" required class="input" />
+            </div>
+          </div>
+        </div>
 
-        <label class="app-form-field">
-          <span class="app-form-label">Start Time</span>
-          <input v-model="form.startTime" type="time" required class="app-form-control" />
-        </label>
+        <div class="column is-half">
+          <div class="field">
+            <label class="label">Start Time</label>
+            <div class="control">
+              <input v-model="form.startTime" type="time" required class="input" />
+            </div>
+          </div>
+        </div>
 
-        <label class="app-form-field">
-          <span class="app-form-label">End Time</span>
-          <input v-model="form.endTime" type="time" required class="app-form-control" />
-        </label>
+        <div class="column is-half">
+          <div class="field">
+            <label class="label">End Time</label>
+            <div class="control">
+              <input v-model="form.endTime" type="time" required class="input" />
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="app-actions">
-        <div class="app-actions-main">
-          <button type="submit" :disabled="isCreating" class="app-button-primary">
-            {{ isCreating ? 'Creating...' : 'Create' }}
-          </button>
-          <button type="button" class="app-button-secondary" :disabled="isCreating" @click="onCancel">Cancel</button>
-        </div>
+      <div class="buttons mt-2">
+        <button type="submit" :disabled="isCreating" class="button is-primary">
+          {{ isCreating ? 'Creating...' : 'Create' }}
+        </button>
+        <button type="button" class="button" :disabled="isCreating" @click="onCancel">Cancel</button>
       </div>
     </form>
   </section>
 </template>
-
-<style scoped>
-.time-tracking-create-page {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.time-tracking-create-page-title {
-  margin: 0;
-  color: #f4f8ff;
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.time-tracking-create-page-subtitle {
-  margin: 0.35rem 0 0;
-  color: var(--app-text-muted);
-  font-size: 0.92rem;
-}
-
-.time-tracking-create-page-error {
-  margin: 0;
-}
-</style>
