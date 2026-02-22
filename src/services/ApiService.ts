@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { env } from '../config/env';
 import type { LoginRequest, LoginResponse } from '../types/auth';
+import type { CreateTimeTrackerRequest, TimeTracker, UpdateTimeTrackerRequest } from '../types/timeTracker';
 import type { CreateUserRequest, UpdateUserRequest, User } from '../types/user';
 
 class ApiService {
@@ -79,6 +80,25 @@ class ApiService {
     await this.api.delete(`/users/${userId}`);
   }
 
+  async getTimeTrackers(): Promise<TimeTracker[]> {
+    const { data } = await this.api.get('/time-trackers');
+    return this.extractTimeTrackers(data);
+  }
+
+  async createTimeTracker(payload: CreateTimeTrackerRequest): Promise<TimeTracker> {
+    const { data } = await this.api.post('/time-trackers', payload);
+    return this.extractTimeTracker(data);
+  }
+
+  async updateTimeTracker(timeTrackerId: string, payload: UpdateTimeTrackerRequest): Promise<TimeTracker> {
+    const { data } = await this.api.patch(`/time-trackers/${timeTrackerId}`, payload);
+    return this.extractTimeTracker(data);
+  }
+
+  async deleteTimeTracker(timeTrackerId: string): Promise<void> {
+    await this.api.delete(`/time-trackers/${timeTrackerId}`);
+  }
+
   private getAuthToken(): string | null {
     return localStorage.getItem(this.authTokenKey);
   }
@@ -115,8 +135,44 @@ class ApiService {
     throw new Error('Unexpected user response format');
   }
 
+  private extractTimeTrackers(data: unknown): TimeTracker[] {
+    if (Array.isArray(data)) {
+      return data as TimeTracker[];
+    }
+
+    if (this.isRecord(data) && Array.isArray(data.data)) {
+      return data.data as TimeTracker[];
+    }
+
+    if (this.isRecord(data) && Array.isArray(data.timeTrackers)) {
+      return data.timeTrackers as TimeTracker[];
+    }
+
+    throw new Error('Unexpected time trackers response format');
+  }
+
+  private extractTimeTracker(data: unknown): TimeTracker {
+    if (this.isTimeTracker(data)) {
+      return data;
+    }
+
+    if (this.isRecord(data) && this.isTimeTracker(data.data)) {
+      return data.data;
+    }
+
+    if (this.isRecord(data) && this.isTimeTracker(data.timeTracker)) {
+      return data.timeTracker;
+    }
+
+    throw new Error('Unexpected time tracker response format');
+  }
+
   private isUser(value: unknown): value is User {
     return this.isRecord(value) && typeof value.id === 'string' && typeof value.email === 'string';
+  }
+
+  private isTimeTracker(value: unknown): value is TimeTracker {
+    return this.isRecord(value) && typeof value.id === 'string' && typeof value.userId === 'string';
   }
 
   private isRecord(value: unknown): value is Record<string, unknown> {
