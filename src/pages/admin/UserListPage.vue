@@ -38,7 +38,7 @@ onMounted(loadUsers);
 </script>
 
 <template>
-  <section class="admin-users app-panel">
+  <section class="admin-users">
     <header class="admin-users-header">
       <div>
         <h1 class="admin-users-title">User Management</h1>

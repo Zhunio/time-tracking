@@ -166,7 +166,7 @@ onMounted(loadUser);
 </script>
 
 <template>
-  <section class="admin-edit-user app-panel">
+  <section class="admin-edit-user">
     <header>
       <h1 class="admin-edit-user-title">Edit User</h1>
       <p class="admin-edit-user-subtitle">Update user account details.</p>
@@ -331,8 +331,14 @@ onMounted(loadUser);
   margin: 0;
 }
 
+.admin-reset-password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .admin-reset-password-actions {
-  margin-top: 0.5rem;
+  margin-top: 0;
 }
 
 .admin-edit-user-actions {

@@ -15,7 +15,7 @@ const {
 </script>
 
 <template>
-  <section class="time-tracking-edit-page app-panel">
+  <section class="time-tracking-edit-page">
     <header>
       <h1 class="time-tracking-edit-page-title">Edit Time Tracking</h1>
       <p class="time-tracking-edit-page-subtitle">Update a time tracking record.</p>

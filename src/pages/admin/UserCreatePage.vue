@@ -58,7 +58,7 @@ const onCancel = async () => {
 </script>
 
 <template>
-  <section class="admin-create-user app-panel">
+  <section class="admin-create-user">
     <header>
       <h1 class="admin-create-user-title">Create User</h1>
       <p class="admin-create-user-subtitle">Add a new user account.</p>

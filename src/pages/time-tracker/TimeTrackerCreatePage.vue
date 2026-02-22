@@ -6,7 +6,7 @@ const { form, users, isAdmin, isCreating, isLoadingUsers, errorMessage, onCreate
 </script>
 
 <template>
-  <section class="time-tracking-create-page app-panel">
+  <section class="time-tracking-create-page">
     <header>
       <h1 class="time-tracking-create-page-title">Create Time Tracking</h1>
       <p class="time-tracking-create-page-subtitle">Add a new time tracking record.</p>

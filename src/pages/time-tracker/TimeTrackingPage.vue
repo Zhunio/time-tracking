@@ -111,10 +111,7 @@ const goToEditTimeTracker = async (entry: EntryRow) => {
 }
 
 .time-tracking-page-header {
-  border: 1px solid var(--app-border);
-  border-radius: 14px;
-  background: linear-gradient(160deg, rgba(28, 42, 66, 0.95) 0%, rgba(18, 28, 45, 0.98) 100%);
-  padding: 1rem 1.1rem;
+  padding: 0.1rem 0;
 }
 
 .time-tracking-page-title {
