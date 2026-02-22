@@ -1,30 +1,53 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
-import HomePage from '../pages/HomePage.vue';
-import LoginPage from '../pages/LoginPage.vue';
-import RegisterPage from '../pages/RegisterPage.vue';
+import LoginPage from '../pages/login/LoginPage.vue';
+import RegisterPage from '../pages/login/RegisterPage.vue';
 import UserListPage from '../pages/admin/UserListPage.vue';
 import UserCreatePage from '../pages/admin/UserCreatePage.vue';
 import UserEditPage from '../pages/admin/UserEditPage.vue';
+import TimeTrackerCreatePage from '../pages/time-tracker/TimeTrackerCreatePage.vue';
+import TimeTrackerEditPage from '../pages/time-tracker/TimeTrackerEditPage.vue';
+import TimeTrackingPage from '../pages/time-tracker/TimeTrackingPage.vue';
 import apiService from '../services/ApiService';
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'home',
-    component: HomePage,
+    component: TimeTrackingPage,
+    alias: '/time-trackers',
     meta: { requiresAuth: true },
   },
   {
-    path: '/login',
+    path: '/time-trackers/create',
+    name: 'time-trackers-create',
+    component: TimeTrackerCreatePage,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/time-trackers/:id/edit',
+    name: 'time-trackers-edit',
+    component: TimeTrackerEditPage,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/auth/login',
     name: 'login',
     component: LoginPage,
     meta: { guestOnly: true },
   },
   {
-    path: '/register',
+    path: '/auth/register',
     name: 'register',
     component: RegisterPage,
     meta: { guestOnly: true },
+  },
+  {
+    path: '/login',
+    redirect: '/auth/login',
+  },
+  {
+    path: '/register',
+    redirect: '/auth/register',
   },
   {
     path: '/admin/users',

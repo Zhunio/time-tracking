@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import apiService from '../services/ApiService';
+import apiService from '../../services/ApiService';
 
 const email = ref('');
 const password = ref('');
@@ -24,7 +24,7 @@ const onLogin = async () => {
       password: password.value,
     });
 
-    await router.push('/');
+    await router.push('/time-trackers');
   } catch (error) {
     errorMessage.value = 'Invalid email or password. Please try again';
   } finally {
