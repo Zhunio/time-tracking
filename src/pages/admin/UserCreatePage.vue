@@ -68,29 +68,29 @@ const onCancel = async () => {
 
     <form class="admin-create-user-form" @submit.prevent="onCreateUser">
       <div class="admin-create-user-grid">
-        <label class="admin-create-user-field">
-          <span>First Name</span>
-          <input v-model="form.firstName" type="text" required class="admin-create-user-input" />
+        <label class="app-form-field">
+          <span class="app-form-label">First Name</span>
+          <input v-model="form.firstName" type="text" required class="app-form-control" />
         </label>
 
-        <label class="admin-create-user-field">
-          <span>Last Name</span>
-          <input v-model="form.lastName" type="text" required class="admin-create-user-input" />
+        <label class="app-form-field">
+          <span class="app-form-label">Last Name</span>
+          <input v-model="form.lastName" type="text" required class="app-form-control" />
         </label>
 
-        <label class="admin-create-user-field">
-          <span>Email</span>
-          <input v-model="form.email" type="email" required class="admin-create-user-input" />
+        <label class="app-form-field">
+          <span class="app-form-label">Email</span>
+          <input v-model="form.email" type="email" required class="app-form-control" />
         </label>
 
-        <label class="admin-create-user-field">
-          <span>Date of Birth</span>
-          <input v-model="form.dateOfBirth" type="date" required class="admin-create-user-input" />
+        <label class="app-form-field">
+          <span class="app-form-label">Date of Birth</span>
+          <input v-model="form.dateOfBirth" type="date" required class="app-form-control" />
         </label>
 
-        <label class="admin-create-user-field admin-create-user-field-password">
-          <span>Password</span>
-          <input v-model="form.password" type="password" required class="admin-create-user-input" />
+        <label class="app-form-field admin-create-user-field-password">
+          <span class="app-form-label">Password</span>
+          <input v-model="form.password" type="password" required class="app-form-control" />
         </label>
 
         <label class="admin-create-user-checkbox">
@@ -138,18 +138,6 @@ const onCancel = async () => {
 
 .admin-create-user-grid {
   @apply grid gap-3 md:grid-cols-2;
-}
-
-.admin-create-user-field {
-  @apply block;
-}
-
-.admin-create-user-field span {
-  @apply mb-1 block text-sm font-medium text-slate-300;
-}
-
-.admin-create-user-input {
-  @apply w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-slate-100 outline-none ring-0 transition placeholder:text-slate-500 focus:border-slate-500;
 }
 
 .admin-create-user-checkbox {

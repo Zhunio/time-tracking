@@ -26,24 +26,24 @@ const {
 
     <form v-else class="time-tracking-edit-page-form" @submit.prevent="onSaveTimeTracker">
       <div class="time-tracking-edit-page-grid">
-        <label class="time-tracking-edit-page-field">
-          <span>Name</span>
-          <div class="time-tracking-edit-page-static-field">{{ userDisplayName }}</div>
+        <label class="app-form-field">
+          <span class="app-form-label">Name</span>
+          <div class="app-form-static">{{ userDisplayName }}</div>
         </label>
 
-        <label class="time-tracking-edit-page-field">
-          <span>Date</span>
-          <input v-model="form.date" type="date" required class="time-tracking-edit-page-input" />
+        <label class="app-form-field">
+          <span class="app-form-label">Date</span>
+          <input v-model="form.date" type="date" required class="app-form-control" />
         </label>
 
-        <label class="time-tracking-edit-page-field">
-          <span>Start Time</span>
-          <input v-model="form.startTime" type="time" required class="time-tracking-edit-page-input" />
+        <label class="app-form-field">
+          <span class="app-form-label">Start Time</span>
+          <input v-model="form.startTime" type="time" required class="app-form-control" />
         </label>
 
-        <label class="time-tracking-edit-page-field">
-          <span>End Time</span>
-          <input v-model="form.endTime" type="time" required class="time-tracking-edit-page-input" />
+        <label class="app-form-field">
+          <span class="app-form-label">End Time</span>
+          <input v-model="form.endTime" type="time" required class="app-form-control" />
         </label>
       </div>
 
@@ -103,32 +103,6 @@ const {
 
 .time-tracking-edit-page-grid {
   @apply grid gap-3 md:grid-cols-2;
-}
-
-.time-tracking-edit-page-field {
-  @apply block;
-}
-
-.time-tracking-edit-page-field span {
-  @apply mb-1 block text-sm font-medium text-slate-300;
-}
-
-.time-tracking-edit-page-input {
-  @apply w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-slate-100 outline-none ring-0 transition placeholder:text-slate-500 focus:border-slate-500;
-}
-
-.time-tracking-edit-page-input[type='time']::-webkit-calendar-picker-indicator {
-  filter: invert(1) brightness(1.3);
-  opacity: 0.9;
-}
-
-.time-tracking-edit-page-input[type='date']::-webkit-calendar-picker-indicator {
-  filter: invert(1) brightness(1.3);
-  opacity: 0.9;
-}
-
-.time-tracking-edit-page-static-field {
-  @apply w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-slate-100;
 }
 
 .time-tracking-edit-page-actions {

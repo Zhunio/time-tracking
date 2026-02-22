@@ -16,13 +16,13 @@ const { form, users, isAdmin, isCreating, isLoadingUsers, errorMessage, onCreate
 
     <form class="time-tracking-create-page-form" @submit.prevent="onCreateTimeTracker">
       <div class="time-tracking-create-page-grid">
-        <label class="time-tracking-create-page-field" v-if="isAdmin">
-          <span>Name</span>
+        <label class="app-form-field" v-if="isAdmin">
+          <span class="app-form-label">Name</span>
           <select
             v-model="form.userId"
             required
             :disabled="isLoadingUsers || isCreating"
-            class="time-tracking-create-page-input time-tracking-create-page-select"
+            class="app-form-control app-form-select"
           >
             <option value="" disabled>{{ isLoadingUsers ? 'Loading users...' : 'Select a user' }}</option>
             <option v-for="user in users" :key="user.id" :value="user.id">
@@ -31,30 +31,30 @@ const { form, users, isAdmin, isCreating, isLoadingUsers, errorMessage, onCreate
           </select>
         </label>
 
-        <label class="time-tracking-create-page-field" v-else>
-          <span>User ID</span>
+        <label class="app-form-field" v-else>
+          <span class="app-form-label">User ID</span>
           <input
             v-model="form.userId"
             type="text"
             required
             readonly
-            class="time-tracking-create-page-input time-tracking-create-page-input-readonly"
+            class="app-form-control app-form-control-readonly"
           />
         </label>
 
-        <label class="time-tracking-create-page-field">
-          <span>Date</span>
-          <input v-model="form.date" type="date" required class="time-tracking-create-page-input" />
+        <label class="app-form-field">
+          <span class="app-form-label">Date</span>
+          <input v-model="form.date" type="date" required class="app-form-control" />
         </label>
 
-        <label class="time-tracking-create-page-field">
-          <span>Start Time</span>
-          <input v-model="form.startTime" type="time" required class="time-tracking-create-page-input" />
+        <label class="app-form-field">
+          <span class="app-form-label">Start Time</span>
+          <input v-model="form.startTime" type="time" required class="app-form-control" />
         </label>
 
-        <label class="time-tracking-create-page-field">
-          <span>End Time</span>
-          <input v-model="form.endTime" type="time" required class="time-tracking-create-page-input" />
+        <label class="app-form-field">
+          <span class="app-form-label">End Time</span>
+          <input v-model="form.endTime" type="time" required class="app-form-control" />
         </label>
       </div>
 
@@ -102,40 +102,6 @@ const { form, users, isAdmin, isCreating, isLoadingUsers, errorMessage, onCreate
 
 .time-tracking-create-page-grid {
   @apply grid gap-3 md:grid-cols-2;
-}
-
-.time-tracking-create-page-field {
-  @apply block;
-}
-
-.time-tracking-create-page-field span {
-  @apply mb-1 block text-sm font-medium text-slate-300;
-}
-
-.time-tracking-create-page-input {
-  @apply w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-slate-100 outline-none ring-0 transition placeholder:text-slate-500 focus:border-slate-500;
-}
-
-.time-tracking-create-page-input[type='time']::-webkit-calendar-picker-indicator {
-  filter: invert(1) brightness(1.3);
-  opacity: 0.9;
-}
-
-.time-tracking-create-page-input[type='date']::-webkit-calendar-picker-indicator {
-  filter: invert(1) brightness(1.3);
-  opacity: 0.9;
-}
-
-.time-tracking-create-page-select {
-  appearance: none;
-  padding-right: 2.25rem;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23cbd5e1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-}
-
-.time-tracking-create-page-input-readonly {
-  @apply bg-slate-900 text-slate-300;
 }
 
 .time-tracking-create-page-actions {

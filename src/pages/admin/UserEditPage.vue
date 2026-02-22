@@ -178,24 +178,24 @@ onMounted(loadUser);
     <div v-else class="admin-edit-user-sections">
       <form class="admin-edit-user-form" @submit.prevent="onSaveUser">
         <div class="admin-edit-user-grid">
-          <label class="admin-edit-user-field">
-            <span>First Name</span>
-            <input v-model="form.firstName" type="text" required class="admin-edit-user-input" />
+          <label class="app-form-field">
+            <span class="app-form-label">First Name</span>
+            <input v-model="form.firstName" type="text" required class="app-form-control" />
           </label>
 
-          <label class="admin-edit-user-field">
-            <span>Last Name</span>
-            <input v-model="form.lastName" type="text" required class="admin-edit-user-input" />
+          <label class="app-form-field">
+            <span class="app-form-label">Last Name</span>
+            <input v-model="form.lastName" type="text" required class="app-form-control" />
           </label>
 
-          <label class="admin-edit-user-field">
-            <span>Email</span>
-            <input v-model="form.email" type="email" required class="admin-edit-user-input" />
+          <label class="app-form-field">
+            <span class="app-form-label">Email</span>
+            <input v-model="form.email" type="email" required class="app-form-control" />
           </label>
 
-          <label class="admin-edit-user-field">
-            <span>Date of Birth</span>
-            <input v-model="form.dateOfBirth" type="date" required class="admin-edit-user-input" />
+          <label class="app-form-field">
+            <span class="app-form-label">Date of Birth</span>
+            <input v-model="form.dateOfBirth" type="date" required class="app-form-control" />
           </label>
 
           <label class="admin-edit-user-checkbox">
@@ -242,17 +242,17 @@ onMounted(loadUser);
 
         <form class="admin-reset-password-form" @submit.prevent="onResetPassword">
           <div class="admin-edit-user-grid">
-            <label class="admin-edit-user-field">
-              <span>New Password</span>
-              <input v-model="resetPasswordForm.password" type="password" required class="admin-edit-user-input" />
+            <label class="app-form-field">
+              <span class="app-form-label">New Password</span>
+              <input v-model="resetPasswordForm.password" type="password" required class="app-form-control" />
             </label>
-            <label class="admin-edit-user-field">
-              <span>Confirm Password</span>
+            <label class="app-form-field">
+              <span class="app-form-label">Confirm Password</span>
               <input
                 v-model="resetPasswordForm.confirmPassword"
                 type="password"
                 required
-                class="admin-edit-user-input"
+                class="app-form-control"
               />
             </label>
           </div>
@@ -305,18 +305,6 @@ onMounted(loadUser);
 
 .admin-edit-user-grid {
   @apply grid gap-3 md:grid-cols-2;
-}
-
-.admin-edit-user-field {
-  @apply block;
-}
-
-.admin-edit-user-field span {
-  @apply mb-1 block text-sm font-medium text-slate-300;
-}
-
-.admin-edit-user-input {
-  @apply w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-slate-100 outline-none ring-0 transition placeholder:text-slate-500 focus:border-slate-500;
 }
 
 .admin-edit-user-checkbox {
