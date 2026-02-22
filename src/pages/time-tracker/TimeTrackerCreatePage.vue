@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useTimeTrackerCreateForm } from './composables/useTimeTrackerCreateForm';
 
-const { form, users, isAdmin, isCreating, isLoadingUsers, errorMessage, onCreateTimeTracker, onCancel } =
-  useTimeTrackerCreateForm();
+const { form, users, isAdmin, isCreating, isLoadingUsers, errorMessage, onCreateTimeTracker, onCancel } = useTimeTrackerCreateForm();
 </script>
 
 <template>
@@ -23,9 +22,7 @@ const { form, users, isAdmin, isCreating, isLoadingUsers, errorMessage, onCreate
               <div class="select is-fullwidth">
                 <select v-model="form.userId" required :disabled="isLoadingUsers || isCreating">
                   <option value="" disabled>{{ isLoadingUsers ? 'Loading users...' : 'Select a user' }}</option>
-                  <option v-for="user in users" :key="user.id" :value="user.id">
-                    {{ user.firstName }} {{ user.lastName }}
-                  </option>
+                  <option v-for="user in users" :key="user.id" :value="user.id">{{ user.firstName }} {{ user.lastName }}</option>
                 </select>
               </div>
             </div>

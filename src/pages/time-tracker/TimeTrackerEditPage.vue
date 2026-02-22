@@ -1,17 +1,8 @@
 <script setup lang="ts">
 import { useTimeTrackerEditForm } from './composables/useTimeTrackerEditForm';
 
-const {
-  form,
-  userDisplayName,
-  isLoading,
-  isSaving,
-  isDeleting,
-  errorMessage,
-  onSaveTimeTracker,
-  onCancel,
-  onDeleteTimeTracker,
-} = useTimeTrackerEditForm();
+const { form, userDisplayName, isLoading, isSaving, isDeleting, errorMessage, onSaveTimeTracker, onCancel, onDeleteTimeTracker } =
+  useTimeTrackerEditForm();
 </script>
 
 <template>

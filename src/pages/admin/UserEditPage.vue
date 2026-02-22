@@ -226,20 +226,8 @@ onMounted(loadUser);
           <button type="submit" :disabled="isSaving || isDeleting || isResettingPassword" class="button is-primary">
             {{ isSaving ? 'Saving...' : 'Save' }}
           </button>
-          <button
-            type="button"
-            class="button"
-            :disabled="isSaving || isDeleting || isResettingPassword"
-            @click="onCancel"
-          >
-            Cancel
-          </button>
-          <button
-            type="button"
-            class="button is-danger"
-            :disabled="isSaving || isDeleting || isResettingPassword"
-            @click="onDeleteUser"
-          >
+          <button type="button" class="button" :disabled="isSaving || isDeleting || isResettingPassword" @click="onCancel">Cancel</button>
+          <button type="button" class="button is-danger" :disabled="isSaving || isDeleting || isResettingPassword" @click="onDeleteUser">
             {{ isDeleting ? 'Deleting...' : 'Delete' }}
           </button>
         </div>

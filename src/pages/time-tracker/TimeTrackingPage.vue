@@ -73,9 +73,7 @@ const goToEditTimeTracker = async (entry: EntryRow) => {
                     <span class="has-text-weight-semibold">{{ entry.dayIndicator }}:</span>
                     <span class="ml-2">{{ to12HourTime(entry.startTime) }} - {{ to12HourTime(entry.endTime) }}</span>
                   </button>
-                  <span class="tag is-info is-light"
-                    >{{ getDurationHours(entry.startTime, entry.endTime).toFixed(1) }}h</span
-                  >
+                  <span class="tag is-info is-light">{{ getDurationHours(entry.startTime, entry.endTime).toFixed(1) }}h</span>
                 </template>
               </li>
             </ul>
